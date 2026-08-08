@@ -1,0 +1,71 @@
+const NAV_LINKS = ["Home", "About", "Departments", "Doctors", "Contact"];
+
+export default function Navbar() {
+  return (
+    <header className="animate-navbar-drop fixed inset-x-0 top-4 z-50 px-4 sm:px-6">
+      <nav className="relative mx-auto flex max-w-7xl items-center justify-between overflow-hidden border border-black/5 bg-gradient-to-b from-white to-slate-100 px-4 py-2.5 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.25)] ring-1 ring-white/60 sm:px-6">
+        {/* Subtle dotted texture */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.35] [background-image:radial-gradient(rgba(0,0,0,0.06)_1px,transparent_1px)] [background-size:10px_10px]"
+          aria-hidden="true"
+        />
+
+        {/* Logo */}
+        <a
+          href="#home"
+          className="group relative flex items-center"
+          aria-label="Mātru Multispeciality Hospital — home"
+        >
+          <img
+            src="/matru-primarylogo.png"
+            alt="Mātru Multispeciality Hospital"
+            className="h-9 w-auto origin-left drop-shadow-[0_6px_14px_rgba(0,0,0,0.18)] transition-transform duration-500 ease-out will-change-transform group-hover:scale-[1.04] sm:h-11"
+          />
+        </a>
+
+        {/* Center links */}
+        <ul className="relative hidden items-center gap-1 md:flex">
+          {NAV_LINKS.map((link, i) => (
+            <li key={link} className="flex items-center">
+              <a
+                href={`#${link.toLowerCase()}`}
+                className="rounded-lg px-3 py-1.5 text-[15px] font-medium text-slate-700 transition-colors duration-200 hover:text-primary-600"
+              >
+                {link}
+              </a>
+              {i < NAV_LINKS.length - 1 && (
+                <span
+                  className="mx-1 h-1 w-1 rotate-90 rounded-[1px] bg-slate-300"
+                  aria-hidden="true"
+                />
+              )}
+            </li>
+          ))}
+        </ul>
+
+        {/* CTA */}
+        <a
+          href="#book-appointment"
+          className="group relative flex items-center gap-3 bg-slate-900 py-2 pl-4 pr-2 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:bg-black hover:shadow-lg"
+        >
+          <span className="hidden sm:inline">Book appointment</span>
+          <span className="sm:hidden">Book</span>
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/20 bg-white/10 transition-colors duration-300 group-hover:bg-white/20">
+            <svg
+              className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              viewBox="0 0 20 20"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M6 14L14 6M14 6H7M14 6v7" />
+            </svg>
+          </span>
+        </a>
+      </nav>
+    </header>
+  );
+}
