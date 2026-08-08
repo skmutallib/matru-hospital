@@ -103,19 +103,19 @@ export default function SpecialitiesSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="w-full bg-white py-24 sm:py-32">
+    <section ref={sectionRef} className="w-full bg-transparent py-24 sm:py-32">
       <div className="mx-auto max-w-6xl px-6 sm:px-8">
         {/* Header — image 2 style */}
-        <span className="inline-flex items-center rounded-full bg-primary-500 px-4 py-1.5 text-sm font-semibold text-white">
+        <span data-reveal className="inline-flex items-center rounded-full bg-primary-500 px-4 py-1.5 text-sm font-semibold text-white">
           Our Specialities
         </span>
         <div className="mt-6 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-          <h2 className="max-w-2xl text-4xl font-bold leading-tight tracking-tight text-secondary-900 sm:text-5xl lg:text-6xl">
+          <h2 data-reveal className="max-w-2xl text-4xl font-bold leading-tight tracking-tight text-secondary-900 sm:text-5xl lg:text-6xl">
             Comprehensive care,
             <br />
             across every speciality.
           </h2>
-          <p className="max-w-sm text-base leading-relaxed text-slate-500 lg:text-lg">
+          <p data-reveal className="max-w-sm text-base leading-relaxed text-slate-500 lg:text-lg">
             From maternity and critical care to diagnostics and cosmetic surgery
             — expert teams and modern facilities, all under one roof.
           </p>

@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import Preloader from "./components/Preloader";
 import SmoothScroll from "./components/SmoothScroll";
+import ScrollReveal from "./components/ScrollReveal";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -25,6 +26,7 @@ export default function RootLayout({
     <html lang="en" className={inter.variable}>
       <body className="min-h-screen">
         <SmoothScroll />
+        <ScrollReveal />
         <Preloader />
         <Navbar />
         {children}

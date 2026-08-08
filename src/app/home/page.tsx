@@ -1,7 +1,11 @@
 import HeroSection from "./components/HeroSection";
 import StatsSection from "./components/StatsSection";
 import MarqueeSection from "./components/MarqueeSection";
+import LeadershipSection from "./components/LeadershipSection";
 import SpecialitiesSection from "./components/SpecialitiesSection";
+import MessageSection from "./components/MessageSection";
+import FaqSection from "./components/FaqSection";
+import DarkZone from "./components/DarkZone";
 
 export default function HomePage() {
   return (
@@ -9,7 +13,12 @@ export default function HomePage() {
       <HeroSection />
       <StatsSection />
       <MarqueeSection />
-      <SpecialitiesSection />
+      <LeadershipSection />
+      <DarkZone>
+        <SpecialitiesSection />
+        <MessageSection />
+        <FaqSection />
+      </DarkZone>
     </main>
   );
 }

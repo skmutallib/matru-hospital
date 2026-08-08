@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const WORD = "matru";
-const DURATION = 2200;
+const DURATION = 2000;
 
 export default function Preloader() {
   const [count, setCount] = useState(0);
@@ -21,11 +20,7 @@ export default function Preloader() {
       }, 950);
     };
 
-    const prefersReduced = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-
-    if (prefersReduced) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setCount(100);
       finish();
       return () => {
@@ -59,74 +54,44 @@ export default function Preloader() {
   return (
     <div
       className={[
-        "fixed inset-0 z-[100] flex flex-col justify-between overflow-hidden bg-brand-gradient text-white",
+        "fixed inset-0 z-[100] flex flex-col justify-between",
         "transition-transform duration-[950ms] ease-[cubic-bezier(0.76,0,0.24,1)] will-change-transform",
         exiting ? "-translate-y-full" : "translate-y-0",
       ].join(" ")}
+      style={{ backgroundColor: "#f5f2ec", color: "#16211d" }}
       aria-hidden={exiting}
     >
-      {/* Ambient glow */}
-      <div
-        className="pointer-events-none absolute left-1/2 top-1/2 h-[60vw] w-[60vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/10 blur-3xl"
-        aria-hidden="true"
-      />
-
-      {/* Top label */}
-      <div className="relative flex items-center justify-between px-6 pt-8 text-xs font-medium uppercase tracking-[0.3em] text-white/70 sm:px-10">
-        <span>Mātru Hospital</span>
-        <span className="hidden sm:inline">Preventive meets cure</span>
+      {/* Top corner labels */}
+      <div className="flex items-center justify-between px-8 pt-8 text-[11px] font-medium uppercase tracking-[0.35em] text-neutral-400 sm:px-12 sm:pt-10">
+        <span>Mātru</span>
+        <span>Est. 1985</span>
       </div>
 
-      {/* Center wordmark */}
-      <div className="relative flex flex-1 flex-col items-center justify-center">
-        <div className="flex overflow-hidden">
-          {WORD.split("").map((letter, i) => (
-            <span key={i} className="inline-block overflow-hidden">
-              <span
-                className="animate-preloader-letter inline-block text-[22vw] font-bold leading-none tracking-tight drop-shadow-[0_8px_40px_rgba(0,0,0,0.15)] sm:text-[16vw] lg:text-[13vw]"
-                style={{ animationDelay: `${0.1 + i * 0.09}s` }}
-              >
-                {letter}
-              </span>
-            </span>
-          ))}
-        </div>
-
-        {/* Tagline */}
-        <div className="mt-4 flex items-center gap-4 overflow-hidden sm:mt-6">
-          <span
-            className="animate-preloader-letter h-px w-10 bg-white/40 sm:w-16"
-            style={{ animationDelay: "0.65s" }}
-            aria-hidden="true"
-          />
-          <span
-            className="animate-preloader-letter text-[3.4vw] font-light uppercase tracking-[0.35em] text-white/85 sm:text-lg lg:text-xl"
-            style={{ animationDelay: "0.7s" }}
-          >
-            Multispecialist Hospital
-          </span>
-          <span
-            className="animate-preloader-letter h-px w-10 bg-white/40 sm:w-16"
-            style={{ animationDelay: "0.65s" }}
-            aria-hidden="true"
-          />
-        </div>
+      {/* Centered mark */}
+      <div className="flex flex-1 items-center justify-center px-8">
+        <img
+          src="/matru-primarylogo.png"
+          alt="Mātru Multispeciality Hospital"
+          className="animate-hero-rise h-14 w-auto sm:h-20"
+        />
       </div>
 
-      {/* Bottom: progress + counter */}
-      <div className="relative px-6 pb-10 sm:px-10">
+      {/* Baseline: label, counter, hairline rule */}
+      <div className="px-8 pb-9 sm:px-12 sm:pb-12">
         <div className="flex items-end justify-between">
-          <span className="text-sm font-medium uppercase tracking-[0.25em] text-white/70">
+          <span className="pb-2 text-[11px] font-medium uppercase tracking-[0.35em] text-neutral-400 sm:pb-4">
             Loading
           </span>
-          <span className="text-5xl font-bold tabular-nums leading-none sm:text-7xl">
+          <span className="text-6xl font-light leading-none tabular-nums tracking-tight sm:text-8xl">
             {count}
-            <span className="text-2xl align-top sm:text-4xl">%</span>
+            <span className="align-top text-xl text-neutral-400 sm:text-2xl">
+              %
+            </span>
           </span>
         </div>
-        <div className="mt-5 h-[3px] w-full overflow-hidden rounded-full bg-white/20">
+        <div className="mt-6 h-px w-full overflow-hidden bg-neutral-300">
           <div
-            className="h-full rounded-full bg-white transition-[width] duration-150 ease-out"
+            className="h-full bg-[#16211d] transition-[width] duration-150 ease-out"
             style={{ width: `${count}%` }}
           />
         </div>

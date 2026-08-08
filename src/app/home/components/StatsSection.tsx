@@ -198,7 +198,7 @@ export default function StatsSection() {
       <div className="relative z-10 mx-auto w-full max-w-[88rem] px-4 sm:px-8">
         <div className="rounded-[2.5rem] bg-slate-50 p-8 sm:p-14 lg:p-16">
           {/* Top labels */}
-          <div className="flex items-center justify-between text-sm font-medium tracking-wide text-slate-400">
+          <div data-reveal className="flex items-center justify-between text-sm font-medium tracking-wide text-slate-400">
             <span>Mātru Hospital</span>
             <span className="hidden sm:inline">Our Impact</span>
             <span>02</span>
@@ -206,12 +206,12 @@ export default function StatsSection() {
 
           {/* Heading */}
           <div className="mt-8 flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
-            <h2 className="max-w-2xl text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
+            <h2 data-reveal className="max-w-2xl text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
               Trusted care,
               <br />
               proven by numbers
             </h2>
-            <p className="max-w-sm text-base leading-relaxed text-slate-500 sm:pt-2 lg:text-lg">
+            <p data-reveal className="max-w-sm text-base leading-relaxed text-slate-500 sm:pt-2 lg:text-lg">
               Decades of compassionate, preventive-focused treatment — measured
               by outcomes and the families we serve.
             </p>
@@ -222,6 +222,7 @@ export default function StatsSection() {
             {CARDS.map((card) => (
               <div
                 key={card.title}
+                data-reveal
                 style={card.filled ? CHAMFER_RIGHT : CHAMFER_LEFT}
                 className={[
                   "stat-card flex min-h-[20rem] flex-col p-8 sm:min-h-[24rem] sm:p-10",
