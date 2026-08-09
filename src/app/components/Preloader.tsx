@@ -58,7 +58,7 @@ export default function Preloader() {
         "transition-transform duration-[950ms] ease-[cubic-bezier(0.76,0,0.24,1)] will-change-transform",
         exiting ? "-translate-y-full" : "translate-y-0",
       ].join(" ")}
-      style={{ backgroundColor: "#f5f2ec", color: "#16211d" }}
+      style={{ backgroundColor: "#0a0b0d", color: "#e8eaed" }}
       aria-hidden={exiting}
     >
       {/* Top corner labels */}
@@ -89,9 +89,9 @@ export default function Preloader() {
             </span>
           </span>
         </div>
-        <div className="mt-6 h-px w-full overflow-hidden bg-neutral-300">
+        <div className="mt-6 h-px w-full overflow-hidden bg-white/15">
           <div
-            className="h-full bg-[#16211d] transition-[width] duration-150 ease-out"
+            className="h-full bg-primary-500 transition-[width] duration-150 ease-out"
             style={{ width: `${count}%` }}
           />
         </div>

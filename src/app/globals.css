@@ -44,9 +44,16 @@
   --color-secondary-900: #144d4f;
   --color-secondary: #16bcbf;
 
-  /* Neutrals */
-  --color-ink: #14211f;
-  --color-muted: #52615f;
+  /* Dark theme surfaces + text
+     The whole site runs on a single permanent dark theme.
+     `bg`  = page background, `surface` = elevated panels/cards,
+     `ink` = primary text, `muted` = secondary text. */
+  --color-bg: #0a0b0d;
+  --color-surface: #121417;
+  --color-surface-2: #17191d;
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-ink: #e8eaed;
+  --color-muted: #9aa7a5;
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -55,6 +62,7 @@
 /* Base */
 html {
   scroll-behavior: smooth;
+  color-scheme: dark;
 }
 
 /* Lenis smooth scroll */
@@ -76,11 +84,16 @@ html.lenis body {
 }
 
 body {
-  background: #ffffff;
+  background: var(--color-bg);
   color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-primary-500);
+  color: #ffffff;
 }
 
 /* Reusable brand gradient (green → orange) */

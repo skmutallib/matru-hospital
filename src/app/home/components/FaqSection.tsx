@@ -52,24 +52,24 @@ export default function FaqSection() {
   return (
     <section className="faq-anchor w-full bg-transparent py-24 sm:py-32">
       <div className="mx-auto w-full max-w-6xl px-6 sm:px-8">
-        <div className="grid grid-cols-1 gap-10 rounded-[2rem] bg-white p-8 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.25)] sm:p-12 lg:grid-cols-[2fr_3fr] lg:gap-16 lg:p-16">
+        <div className="grid grid-cols-1 gap-10 rounded-[2rem] bg-white/[0.04] p-8 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.6)] ring-1 ring-white/10 sm:p-12 lg:grid-cols-[2fr_3fr] lg:gap-16 lg:p-16">
           {/* Left column */}
           <div className="flex flex-col" data-reveal>
-            <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-neutral-500">
+            <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-neutral-400">
               <span className="h-2 w-2 rounded-full bg-primary-500" />
               FAQ
             </span>
-            <h2 className="mt-6 text-4xl font-bold leading-tight tracking-tight text-secondary-900 sm:text-5xl">
+            <h2 className="mt-6 text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl">
               Frequently Asked
               <br />
               Questions
             </h2>
 
             <div className="mt-auto pt-12">
-              <p className="text-lg font-semibold text-secondary-900">
+              <p className="text-lg font-semibold text-white">
                 Still have a question?
               </p>
-              <p className="mt-2 max-w-xs text-sm leading-relaxed text-neutral-500">
+              <p className="mt-2 max-w-xs text-sm leading-relaxed text-neutral-400">
                 Our care team is here to help — reach out and we&rsquo;ll guide
                 you to the right specialist.
               </p>
@@ -92,7 +92,7 @@ export default function FaqSection() {
                   data-reveal
                   className={[
                     "rounded-2xl transition-colors duration-300",
-                    open ? "bg-primary-500" : "bg-neutral-50 hover:bg-neutral-100",
+                    open ? "bg-primary-500" : "bg-white/[0.04] hover:bg-white/[0.08]",
                   ].join(" ")}
                 >
                   <button
@@ -112,7 +112,7 @@ export default function FaqSection() {
                     <span
                       className={[
                         "flex-1 text-base font-semibold sm:text-lg",
-                        open ? "text-white" : "text-secondary-900",
+                        open ? "text-white" : "text-slate-200",
                       ].join(" ")}
                     >
                       {faq.q}

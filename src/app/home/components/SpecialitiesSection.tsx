@@ -110,12 +110,12 @@ export default function SpecialitiesSection() {
           Our Specialities
         </span>
         <div className="mt-6 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-          <h2 data-reveal className="max-w-2xl text-4xl font-bold leading-tight tracking-tight text-secondary-900 sm:text-5xl lg:text-6xl">
+          <h2 data-reveal className="max-w-2xl text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
             Comprehensive care,
             <br />
             across every speciality.
           </h2>
-          <p data-reveal className="max-w-sm text-base leading-relaxed text-slate-500 lg:text-lg">
+          <p data-reveal className="max-w-sm text-base leading-relaxed text-slate-400 lg:text-lg">
             From maternity and critical care to diagnostics and cosmetic surgery
             — expert teams and modern facilities, all under one roof.
           </p>

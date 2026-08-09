@@ -40,11 +40,21 @@ export default function HeroSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative flex min-h-screen w-full items-center overflow-hidden bg-primary-500"
+      className="relative flex min-h-screen w-full items-center overflow-hidden bg-black"
     >
+      {/* Brand glow */}
+      <div
+        className="pointer-events-none absolute -left-40 top-1/4 h-[36rem] w-[36rem] rounded-full bg-primary-500/25 blur-[140px]"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute -right-32 bottom-0 h-[32rem] w-[32rem] rounded-full bg-secondary-500/20 blur-[140px]"
+        aria-hidden="true"
+      />
+
       {/* Subtle grid lines */}
       <div
-        className="hero-grid pointer-events-none absolute inset-0 opacity-[0.07] [background-image:linear-gradient(to_right,white_1px,transparent_1px),linear-gradient(to_bottom,white_1px,transparent_1px)] [background-size:64px_64px]"
+        className="hero-grid pointer-events-none absolute inset-0 opacity-[0.06] [background-image:linear-gradient(to_right,white_1px,transparent_1px),linear-gradient(to_bottom,white_1px,transparent_1px)] [background-size:64px_64px]"
         aria-hidden="true"
       />
 

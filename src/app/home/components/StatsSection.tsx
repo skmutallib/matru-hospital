@@ -177,7 +177,7 @@ export default function StatsSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative z-10 -mt-10 flex min-h-screen w-full items-center overflow-hidden rounded-t-[2.5rem] bg-white py-10 sm:-mt-20 sm:rounded-t-[5rem]"
+      className="relative z-10 -mt-10 flex min-h-screen w-full items-center overflow-hidden rounded-t-[2.5rem] bg-[#0a0b0d] py-10 sm:-mt-20 sm:rounded-t-[5rem]"
     >
       {/* Floating medicine icons */}
       <div className="pointer-events-none absolute inset-0 z-20" aria-hidden="true">
@@ -196,9 +196,9 @@ export default function StatsSection() {
       </div>
 
       <div className="relative z-10 mx-auto w-full max-w-[88rem] px-4 sm:px-8">
-        <div className="rounded-[2.5rem] bg-slate-50 p-8 sm:p-14 lg:p-16">
+        <div className="rounded-[2.5rem] bg-white/[0.04] p-8 ring-1 ring-white/10 sm:p-14 lg:p-16">
           {/* Top labels */}
-          <div data-reveal className="flex items-center justify-between text-sm font-medium tracking-wide text-slate-400">
+          <div data-reveal className="flex items-center justify-between text-sm font-medium tracking-wide text-slate-500">
             <span>Mātru Hospital</span>
             <span className="hidden sm:inline">Our Impact</span>
             <span>02</span>
@@ -206,12 +206,12 @@ export default function StatsSection() {
 
           {/* Heading */}
           <div className="mt-8 flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
-            <h2 data-reveal className="max-w-2xl text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
+            <h2 data-reveal className="max-w-2xl text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
               Trusted care,
               <br />
               proven by numbers
             </h2>
-            <p data-reveal className="max-w-sm text-base leading-relaxed text-slate-500 sm:pt-2 lg:text-lg">
+            <p data-reveal className="max-w-sm text-base leading-relaxed text-slate-400 sm:pt-2 lg:text-lg">
               Decades of compassionate, preventive-focused treatment — measured
               by outcomes and the families we serve.
             </p>
@@ -228,7 +228,7 @@ export default function StatsSection() {
                   "stat-card flex min-h-[20rem] flex-col p-8 sm:min-h-[24rem] sm:p-10",
                   card.filled
                     ? "bg-gradient-to-br from-primary-400 via-primary-500 to-primary-600 text-white shadow-[0_24px_50px_-18px_rgba(245,131,37,0.6)]"
-                    : "bg-secondary-50 text-slate-900",
+                    : "bg-white/[0.04] text-white ring-1 ring-white/10",
                 ].join(" ")}
               >
                 {/* Icon chip */}
@@ -237,7 +237,7 @@ export default function StatsSection() {
                     "flex h-14 w-14 items-center justify-center rounded-2xl",
                     card.filled
                       ? "bg-white/20 text-white"
-                      : "bg-secondary-100 text-secondary-600",
+                      : "bg-secondary-500/15 text-secondary-300",
                   ].join(" ")}
                 >
                   {card.icon}
@@ -249,7 +249,7 @@ export default function StatsSection() {
                     <span
                       className={[
                         "stat-num text-7xl font-bold leading-none tracking-tight tabular-nums sm:text-8xl lg:text-8xl items-start",
-                        card.filled ? "text-white" : "text-secondary-600",
+                        card.filled ? "text-white" : "text-secondary-400",
                       ].join(" ")}
                       data-target={card.target}
                       data-thousands={card.thousands ? "true" : "false"}
@@ -270,7 +270,7 @@ export default function StatsSection() {
                   <h3
                     className={[
                       "mt-3 text-2xl font-semibold sm:text-3xl",
-                      card.filled ? "text-white" : "text-slate-900",
+                      card.filled ? "text-white" : "text-white",
                     ].join(" ")}
                   >
                     {card.title}
@@ -281,7 +281,7 @@ export default function StatsSection() {
                 <p
                   className={[
                     "ml-auto mt-6 max-w-[13rem] text-right text-sm leading-snug",
-                    card.filled ? "text-white/80" : "text-slate-500",
+                    card.filled ? "text-white/80" : "text-slate-400",
                   ].join(" ")}
                 >
                   {card.caption}

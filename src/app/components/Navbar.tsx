@@ -3,10 +3,10 @@ const NAV_LINKS = ["Home", "About", "Departments", "Doctors", "Contact"];
 export default function Navbar() {
   return (
     <header className="animate-navbar-drop fixed inset-x-0 top-4 z-50 px-4 sm:px-6">
-      <nav className="relative mx-auto flex max-w-7xl items-center justify-between overflow-hidden border border-black/5 bg-gradient-to-b from-white to-slate-100 px-4 py-2.5 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.25)] ring-1 ring-white/60 sm:px-6">
+      <nav className="relative mx-auto flex max-w-7xl items-center justify-between overflow-hidden border border-white/10 bg-gradient-to-b from-neutral-900/90 to-neutral-950/90 px-4 py-2.5 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.6)] ring-1 ring-white/5 backdrop-blur-xl sm:px-6">
         {/* Subtle dotted texture */}
         <div
-          className="pointer-events-none absolute inset-0 opacity-[0.35] [background-image:radial-gradient(rgba(0,0,0,0.06)_1px,transparent_1px)] [background-size:10px_10px]"
+          className="pointer-events-none absolute inset-0 opacity-[0.35] [background-image:radial-gradient(rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:10px_10px]"
           aria-hidden="true"
         />
 
@@ -29,13 +29,13 @@ export default function Navbar() {
             <li key={link} className="flex items-center">
               <a
                 href={`#${link.toLowerCase()}`}
-                className="rounded-lg px-3 py-1.5 text-[15px] font-medium text-slate-700 transition-colors duration-200 hover:text-primary-600"
+                className="rounded-lg px-3 py-1.5 text-[15px] font-medium text-slate-300 transition-colors duration-200 hover:text-primary-400"
               >
                 {link}
               </a>
               {i < NAV_LINKS.length - 1 && (
                 <span
-                  className="mx-1 h-1 w-1 rotate-90 rounded-[1px] bg-slate-300"
+                  className="mx-1 h-1 w-1 rotate-90 rounded-[1px] bg-white/20"
                   aria-hidden="true"
                 />
               )}
@@ -46,7 +46,7 @@ export default function Navbar() {
         {/* CTA */}
         <a
           href="#book-appointment"
-          className="group relative flex items-center gap-3 bg-slate-900 py-2 pl-4 pr-2 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:bg-black hover:shadow-lg"
+          className="group relative flex items-center gap-3 bg-primary-500 py-2 pl-4 pr-2 text-sm font-semibold text-white shadow-md shadow-primary-500/25 transition-all duration-300 hover:bg-primary-600 hover:shadow-lg"
         >
           <span className="hidden sm:inline">Book appointment</span>
           <span className="sm:hidden">Book</span>

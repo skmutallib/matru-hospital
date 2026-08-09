@@ -34,10 +34,10 @@ export default function MarqueeSection() {
     <div className="flex shrink-0 items-center" aria-hidden="true">
       {Array.from({ length: 4 }).map((_, i) => (
         <span key={i} className="flex items-center">
-          <span className="whitespace-nowrap px-8 text-6xl font-bold tracking-tight text-black sm:px-12 sm:text-8xl lg:text-[17rem]">
+          <span className="whitespace-nowrap px-8 text-6xl font-bold tracking-tight text-white sm:px-12 sm:text-8xl lg:text-[17rem]">
             {PHRASE}
           </span>
-          <span className="px-2 text-4xl text-black/30 sm:text-6xl">
+          <span className="px-2 text-4xl text-primary-500 sm:text-6xl">
             {SEPARATOR}
           </span>
         </span>
@@ -46,7 +46,7 @@ export default function MarqueeSection() {
   );
 
   return (
-    <section className="w-full overflow-hidden bg-white py-16 sm:py-24">
+    <section className="w-full overflow-hidden bg-[#0a0b0d] py-16 sm:py-24">
       <span className="sr-only">{PHRASE}</span>
       <div ref={trackRef} className="flex w-max flex-nowrap will-change-transform">
         {group}

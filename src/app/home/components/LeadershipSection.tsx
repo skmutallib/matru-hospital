@@ -47,22 +47,22 @@ const ArrowUpRight = (
 
 export default function LeadershipSection() {
   return (
-    <section className="w-full bg-white py-24 sm:py-32">
+    <section className="w-full bg-[#0a0b0d] py-24 sm:py-32">
       <div className="w-full px-6 sm:px-10 lg:px-16">
         {/* Header */}
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <div data-reveal>
-            <h2 className="text-4xl font-bold tracking-tight text-neutral-900 sm:text-5xl">
+            <h2 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
               Leadership
             </h2>
-            <p className="mt-3 max-w-md text-base text-neutral-500">
+            <p className="mt-3 max-w-md text-base text-neutral-400">
               The people shaping preventive-focused care at Mātru.
             </p>
           </div>
 
           {/* Decorative carousel controls */}
           <div className="flex items-center gap-3" aria-hidden="true">
-            <span className="flex h-11 w-11 items-center justify-center rounded-full border border-neutral-200 text-neutral-600">
+            <span className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-neutral-300">
               <svg className="h-5 w-5" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 5l-5 5 5 5" />
               </svg>
@@ -81,7 +81,7 @@ export default function LeadershipSection() {
             <article
               key={leader.name}
               data-reveal
-              className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-neutral-100 bg-gradient-to-b from-primary-50 via-white to-secondary-50 shadow-[0_20px_50px_-30px_rgba(0,0,0,0.35)]"
+              className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-neutral-900 to-neutral-800 shadow-[0_20px_50px_-30px_rgba(0,0,0,0.8)]"
             >
               {/* Demo profile photo */}
               <img
@@ -91,10 +91,10 @@ export default function LeadershipSection() {
               />
 
               {/* Top pills */}
-              <span className="absolute left-4 top-4 z-10 rounded-full bg-white px-3 py-1 text-xs font-semibold text-neutral-800 shadow-sm ring-1 ring-black/5">
+              <span className="absolute left-4 top-4 z-10 rounded-full bg-black/50 px-3 py-1 text-xs font-semibold text-white shadow-sm ring-1 ring-white/15 backdrop-blur-md">
                 {leader.tag}
               </span>
-              <span className="absolute right-4 top-4 z-10 inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 text-xs font-semibold text-neutral-800 shadow-sm ring-1 ring-black/5">
+              <span className="absolute right-4 top-4 z-10 inline-flex items-center gap-1.5 rounded-full bg-black/50 px-3 py-1 text-xs font-semibold text-white shadow-sm ring-1 ring-white/15 backdrop-blur-md">
                 {leader.specialty}
                 <span className="h-1.5 w-1.5 rounded-full bg-primary-500" />
               </span>
