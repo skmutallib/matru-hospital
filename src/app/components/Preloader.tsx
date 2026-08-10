@@ -17,6 +17,10 @@ export default function Preloader() {
       window.setTimeout(() => {
         setHidden(true);
         document.body.style.overflow = "";
+        // Signal the site (hero) that the loader is gone so its intro
+        // animation plays the first time the user actually sees it.
+        (window as typeof window & { __matruIntroReady?: boolean }).__matruIntroReady = true;
+        window.dispatchEvent(new Event("matru:intro"));
       }, 950);
     };
 

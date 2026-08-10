@@ -19,6 +19,9 @@ export default function SmoothScroll() {
       wheelMultiplier: 1,
     });
 
+    // Expose the instance so global controls (e.g. back-to-top) can drive it.
+    (window as Window & { lenis?: Lenis }).lenis = lenis;
+
     // Keep ScrollTrigger in sync with Lenis's smoothed scroll position.
     lenis.on("scroll", ScrollTrigger.update);
 
@@ -30,6 +33,7 @@ export default function SmoothScroll() {
     return () => {
       gsap.ticker.remove(raf);
       lenis.destroy();
+      delete (window as Window & { lenis?: Lenis }).lenis;
     };
   }, []);
 

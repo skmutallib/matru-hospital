@@ -206,8 +206,23 @@ body {
   }
 }
 
+@keyframes hero-building-rise {
+  from {
+    opacity: 0;
+    transform: translateY(140px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 .animate-hero-rise {
   animation: hero-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-hero-building {
+  animation: hero-building-rise 1.7s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
 }
 
 .animate-hero-float {
@@ -223,6 +238,7 @@ body {
   .animate-card-rise-3d,
   .animate-navbar-drop,
   .animate-hero-rise,
+  .animate-hero-building,
   .animate-hero-float,
   .animate-hero-scroll {
     animation: none;

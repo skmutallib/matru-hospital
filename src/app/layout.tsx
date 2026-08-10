@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Preloader from "./components/Preloader";
 import SmoothScroll from "./components/SmoothScroll";
 import ScrollReveal from "./components/ScrollReveal";
+import ScrollControls from "./components/ScrollControls";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -30,6 +31,7 @@ export default function RootLayout({
         <Preloader />
         <Navbar />
         {children}
+        <ScrollControls />
       </body>
     </html>
   );
