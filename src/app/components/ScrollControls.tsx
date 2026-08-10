@@ -41,7 +41,7 @@ export default function ScrollControls() {
   }, []);
 
   const toTop = () => {
-    const lenis = (window as Window & { lenis?: LenisLike }).lenis;
+    const lenis = (window as unknown as { lenis?: LenisLike }).lenis;
     if (lenis) lenis.scrollTo(0, { duration: 1.2 });
     else window.scrollTo({ top: 0, behavior: "smooth" });
   };
