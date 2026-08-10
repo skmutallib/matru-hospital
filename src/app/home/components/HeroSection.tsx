@@ -13,8 +13,7 @@ export default function HeroSection() {
   const [started, setStarted] = useState(false);
 
   useEffect(() => {
-    type IntroWindow = Window & { __matruIntroReady?: boolean };
-    const w = window as IntroWindow;
+    const w = window as unknown as { __matruIntroReady?: boolean };
 
     if (w.__matruIntroReady) {
       // Defer out of the effect body to avoid a synchronous cascading render.

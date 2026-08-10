@@ -109,7 +109,7 @@ export default function LeadershipSection() {
     // Trigger positions are measured wrong while the preloader locks the
     // page, so recalc once it releases (and after assets/layout settle).
     const refresh = () => ScrollTrigger.refresh();
-    const w = window as Window & { __matruIntroReady?: boolean };
+    const w = window as unknown as { __matruIntroReady?: boolean };
     if (w.__matruIntroReady) requestAnimationFrame(refresh);
     else window.addEventListener("matru:intro", refresh);
     window.addEventListener("load", refresh);
