@@ -1,9 +1,9 @@
 import HeroSection from "./home/components/HeroSection";
-import StatsSection from "./home/components/StatsSection";
+import BrandFilmSection from "./home/components/BrandFilmSection";
+import StatementSection from "./home/components/StatementSection";
+import ValuesSection from "./home/components/ValuesSection";
 import MarqueeSection from "./home/components/MarqueeSection";
-import LeadershipSection from "./home/components/LeadershipSection";
-import SpecialitiesSection from "./home/components/SpecialitiesSection";
-import MessageSection from "./home/components/MessageSection";
+import InsuranceSection from "./home/components/InsuranceSection";
 import FaqSection from "./home/components/FaqSection";
 import DarkZone from "./home/components/DarkZone";
 
@@ -11,12 +11,12 @@ export default function Page() {
   return (
     <main className="flex-1">
       <HeroSection />
-      <StatsSection />
+      <BrandFilmSection />
+      <StatementSection />
+      <ValuesSection />
       <MarqueeSection />
-      <LeadershipSection />
+      <InsuranceSection />
       <DarkZone>
-        <SpecialitiesSection />
-        <MessageSection />
         <FaqSection />
       </DarkZone>
     </main>

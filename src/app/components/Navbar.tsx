@@ -1,30 +1,17 @@
-const NAV_LINKS = ["Home", "About", "Departments", "Doctors", "Contact"];
+const NAV_LINKS = ["Home", "About", "Departments", "PMV", "Testimonials", "Gallery"];
 
 export default function Navbar() {
   return (
     <header className="animate-navbar-drop fixed inset-x-0 top-4 z-50 px-4 sm:px-6">
-      <nav className="relative mx-auto flex max-w-7xl items-center justify-between overflow-hidden border border-white/10 bg-gradient-to-b from-neutral-900/90 to-neutral-950/90 px-4 py-2.5 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.6)] ring-1 ring-white/5 backdrop-blur-xl sm:px-6">
+      <nav className="relative mx-auto grid max-w-7xl grid-cols-[1fr_auto_1fr] items-center overflow-hidden border border-white/10 bg-gradient-to-b from-neutral-900/90 to-neutral-950/90 px-4 py-2.5 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.6)] ring-1 ring-white/5 backdrop-blur-xl sm:px-6">
         {/* Subtle dotted texture */}
         <div
           className="pointer-events-none absolute inset-0 opacity-[0.35] [background-image:radial-gradient(rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:10px_10px]"
           aria-hidden="true"
         />
 
-        {/* Logo */}
-        <a
-          href="#home"
-          className="group relative flex items-center"
-          aria-label="Mātru Multispeciality Hospital — home"
-        >
-          <img
-            src="/matru-primarylogo.png"
-            alt="Mātru Multispeciality Hospital"
-            className="h-9 w-auto origin-left drop-shadow-[0_6px_14px_rgba(0,0,0,0.18)] transition-transform duration-500 ease-out will-change-transform group-hover:scale-[1.04] sm:h-11"
-          />
-        </a>
-
-        {/* Center links */}
-        <ul className="relative hidden items-center gap-1 md:flex">
+        {/* Left links */}
+        <ul className="relative hidden items-center gap-1 justify-self-start md:flex">
           {NAV_LINKS.map((link, i) => (
             <li key={link} className="flex items-center">
               <a
@@ -43,10 +30,23 @@ export default function Navbar() {
           ))}
         </ul>
 
+        {/* Center logo */}
+        <a
+          href="#home"
+          className="group relative flex items-center justify-self-center"
+          aria-label="Mātru Multispeciality Hospital — home"
+        >
+          <img
+            src="/matru-primarylogo.png"
+            alt="Mātru Multispeciality Hospital"
+            className="h-9 w-auto drop-shadow-[0_6px_14px_rgba(0,0,0,0.18)] transition-transform duration-500 ease-out will-change-transform group-hover:scale-[1.04] sm:h-11"
+          />
+        </a>
+
         {/* CTA */}
         <a
           href="#book-appointment"
-          className="group relative flex items-center gap-3 bg-primary-500 py-2 pl-4 pr-2 text-sm font-semibold text-white shadow-md shadow-primary-500/25 transition-all duration-300 hover:bg-primary-600 hover:shadow-lg"
+          className="group relative flex items-center gap-3 justify-self-end bg-primary-500 py-2 pl-4 pr-2 text-sm font-semibold text-white shadow-md shadow-primary-500/25 transition-all duration-300 hover:bg-primary-600 hover:shadow-lg"
         >
           <span className="hidden sm:inline">Book appointment</span>
           <span className="sm:hidden">Book</span>

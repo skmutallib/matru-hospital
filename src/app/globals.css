@@ -233,6 +233,32 @@ body {
   animation: hero-scroll 1.8s ease-in-out infinite;
 }
 
+/* ===== Brand film — flowing glow around the video frame ===== */
+@property --filmglow-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes filmglow-spin {
+  to {
+    --filmglow-angle: 360deg;
+  }
+}
+
+.film-glow {
+  background: conic-gradient(
+    from var(--filmglow-angle),
+    var(--color-primary-500) 0deg,
+    var(--color-secondary-400) 90deg,
+    transparent 150deg,
+    var(--color-primary-400) 210deg,
+    var(--color-secondary-500) 300deg,
+    var(--color-primary-500) 360deg
+  );
+  animation: filmglow-spin 6s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-preloader-letter,
   .animate-card-rise-3d,
@@ -240,7 +266,8 @@ body {
   .animate-hero-rise,
   .animate-hero-building,
   .animate-hero-float,
-  .animate-hero-scroll {
+  .animate-hero-scroll,
+  .film-glow {
     animation: none;
   }
 }
