@@ -19,7 +19,8 @@ export default function DepartmentsContent() {
   const [selectedId, setSelectedId] = useState<string>(DEPARTMENTS[0].id);
   // On small screens the list and the detail are two separate "views".
   const [mobileDetailOpen, setMobileDetailOpen] = useState(false);
-  const detailScrollRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const didMountRef = useRef(false);
 
   const selected =
     DEPARTMENTS.find((d) => d.id === selectedId) ?? DEPARTMENTS[0];
@@ -29,14 +30,50 @@ export default function DepartmentsContent() {
     setMobileDetailOpen(true);
   };
 
-  // When the selected department changes, jump the detail panel back to top so
-  // long specialties (e.g. Obs & Gynae) don't open mid-scroll.
+  // When the selected department changes, bring the explorer back into a
+  // comfortable reading position — but only if the reader has scrolled away
+  // from it. Scrolling to the SECTION top (a stable spot near the page top)
+  // rather than the detail avoids Lenis's stale scroll-limit jumping to the
+  // footer when a tall department is swapped for a short one. Uses the site's
+  // Lenis instance so the motion matches the rest of the page.
   useEffect(() => {
-    detailScrollRef.current?.scrollTo?.({ top: 0 });
-    if (mobileDetailOpen && window.matchMedia("(max-width: 1023px)").matches) {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+    // Skip the first render — only react to real selection changes.
+    if (!didMountRef.current) {
+      didMountRef.current = true;
+      return;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    const lenis = (
+      window as unknown as {
+        lenis?: {
+          scrollTo: (t: HTMLElement | number, o?: { offset?: number }) => void;
+          resize?: () => void;
+        };
+      }
+    ).lenis;
+
+    // Defer past the paint of the new (possibly much shorter) detail. Swapping
+    // a tall department for a short one shrinks the page, so we must let Lenis
+    // recompute its scroll bounds first — otherwise its stale limit snaps the
+    // view to the footer and our scroll is ignored.
+    const id = requestAnimationFrame(() =>
+      requestAnimationFrame(() => {
+        const section = sectionRef.current;
+        if (!section) return;
+
+        const top = section.getBoundingClientRect().top;
+        const inComfortableView = top >= -40 && top <= window.innerHeight * 0.5;
+        if (inComfortableView) return; // already looking at it — swap in place.
+
+        if (lenis) {
+          lenis.resize?.();
+          lenis.scrollTo(section, { offset: -96 });
+        } else {
+          section.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      })
+    );
+    return () => cancelAnimationFrame(id);
   }, [selectedId]);
 
   return (
@@ -54,6 +91,22 @@ export default function DepartmentsContent() {
         @keyframes depts-fade {
           from { opacity: 0; transform: translateY(14px); }
           to { opacity: 1; transform: none; }
+        }
+        /* Independent, slim scrollbar for the department rail (native scroll,
+           kept out of Lenis via data-lenis-prevent). */
+        .depts-scope .depts-list {
+          overscroll-behavior: contain;
+          scrollbar-width: thin;
+          scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+        }
+        .depts-scope .depts-list::-webkit-scrollbar { width: 8px; }
+        .depts-scope .depts-list::-webkit-scrollbar-track { background: transparent; }
+        .depts-scope .depts-list::-webkit-scrollbar-thumb {
+          background: rgba(255, 255, 255, 0.14);
+          border-radius: 8px;
+        }
+        .depts-scope .depts-list::-webkit-scrollbar-thumb:hover {
+          background: rgba(255, 255, 255, 0.26);
         }
         @media (prefers-reduced-motion: reduce) {
           .depts-scope .reveal-el,
@@ -111,7 +164,10 @@ export default function DepartmentsContent() {
       </section>
 
       {/* ===== Master · Detail ===== */}
-      <section className="relative w-full px-6 pb-28 sm:px-10 lg:px-16">
+      <section
+        ref={sectionRef}
+        className="relative w-full scroll-mt-24 px-6 pb-28 sm:px-10 lg:px-16"
+      >
         <div className="mx-auto grid w-full max-w-7xl gap-8 lg:grid-cols-[minmax(340px,380px)_1fr] lg:gap-12">
           {/* ----- List ----- */}
           <aside
@@ -129,7 +185,10 @@ export default function DepartmentsContent() {
               </span>
             </div>
 
-            <ul className="reveal-el overflow-hidden rounded-[var(--radius-surface)] border border-white/10 bg-white/[0.02] lg:max-h-[calc(100vh-11rem)] lg:overflow-y-auto">
+            <ul
+              data-lenis-prevent
+              className="depts-list reveal-el overflow-hidden rounded-[var(--radius-surface)] border border-white/10 bg-white/[0.02] lg:max-h-[calc(100vh-9rem)] lg:overflow-y-auto"
+            >
               {DEPARTMENTS.map((d, i) => {
                 const active = d.id === selectedId;
                 const Icon = d.Icon;
@@ -189,11 +248,7 @@ export default function DepartmentsContent() {
           </aside>
 
           {/* ----- Detail ----- */}
-          <div
-            className={`${
-              mobileDetailOpen ? "block" : "hidden"
-            } lg:block`}
-          >
+          <div className={`${mobileDetailOpen ? "block" : "hidden"} lg:block`}>
             {/* Mobile back control */}
             <button
               type="button"
@@ -206,7 +261,6 @@ export default function DepartmentsContent() {
 
             <article
               key={selected.id}
-              ref={detailScrollRef}
               className="detail-anim overflow-hidden rounded-[var(--radius-surface)] border border-white/10 bg-white/[0.02]"
             >
               {/* Detail header */}
