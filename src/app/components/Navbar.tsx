@@ -1,4 +1,15 @@
+import Link from "next/link";
+
 const NAV_LINKS = ["Home", "About", "Departments", "PMV", "Testimonials", "Gallery"];
+
+// Links that point to real pages route there; the rest stay in-page anchors.
+const ROUTES: Record<string, string> = {
+  Home: "/",
+  About: "/about",
+  Departments: "/departments",
+};
+
+const hrefFor = (link: string) => ROUTES[link] ?? `#${link.toLowerCase()}`;
 
 export default function Navbar() {
   return (
@@ -14,12 +25,12 @@ export default function Navbar() {
         <ul className="relative hidden items-center gap-1 justify-self-start md:flex">
           {NAV_LINKS.map((link, i) => (
             <li key={link} className="flex items-center">
-              <a
-                href={`#${link.toLowerCase()}`}
+              <Link
+                href={hrefFor(link)}
                 className="rounded-lg px-3 py-1.5 text-[15px] font-medium text-slate-300 transition-colors duration-200 hover:text-primary-400"
               >
                 {link}
-              </a>
+              </Link>
               {i < NAV_LINKS.length - 1 && (
                 <span
                   className="mx-1 h-1 w-1 rotate-90 rounded-[1px] bg-white/20"
@@ -31,8 +42,8 @@ export default function Navbar() {
         </ul>
 
         {/* Center logo */}
-        <a
-          href="#home"
+        <Link
+          href="/"
           className="group relative flex items-center justify-self-center"
           aria-label="Mātru Multispeciality Hospital — home"
         >
@@ -41,7 +52,7 @@ export default function Navbar() {
             alt="Mātru Multispeciality Hospital"
             className="h-9 w-auto drop-shadow-[0_6px_14px_rgba(0,0,0,0.18)] transition-transform duration-500 ease-out will-change-transform group-hover:scale-[1.04] sm:h-11"
           />
-        </a>
+        </Link>
 
         {/* CTA */}
         <a
