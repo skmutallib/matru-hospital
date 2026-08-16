@@ -8,6 +8,8 @@ const ROUTES: Record<string, string> = {
   About: "/about",
   Departments: "/departments",
   PMV: "/pmv",
+  Testimonials: "/testimonials",
+  Gallery: "/gallery",
 };
 
 const hrefFor = (link: string) => ROUTES[link] ?? `#${link.toLowerCase()}`;

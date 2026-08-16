@@ -35,7 +35,7 @@ export default function DepartmentDetail({ id }: { id: string }) {
   const subSpecialtyCount = d.sections.filter((s) => s.heading).length;
 
   return (
-    <div className="relative min-h-screen overflow-x-clip mt-10 bg-[#f6f7f9] text-slate-800 [color-scheme:light]">
+    <div className="relative min-h-screen overflow-x-clip bg-[#f6f7f9] text-slate-800 [color-scheme:light]">
       {/* ===== Hero ===== */}
       <section className="relative w-full overflow-hidden px-6 pb-16 pt-32 sm:px-10 sm:pt-40 lg:px-16">
         <div
