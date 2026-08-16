@@ -1,16 +1,67 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import type { Icon } from "@phosphor-icons/react";
 import {
   MagnifyingGlassIcon,
   StethoscopeIcon,
   HeartStraightIcon,
+  ArrowUpRightIcon,
+  PlantIcon,
+  BuildingsIcon,
+  PulseIcon,
+  StarFourIcon,
 } from "@phosphor-icons/react/dist/ssr";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const LEGACY = [
-  "Matru Multispeciality Hospital was founded in 1985 by Dr. Krishna Rajendra, whose mother's battle with cancer became the driving force behind his vision to create a hospital where quality, ethical, and compassionate healthcare is accessible to everyone.",
-  "What began as a 25-bed nursing clinic has grown into a 100-bed multispeciality hospital, offering advanced infrastructure, modern technology, and comprehensive care across a wide range of specialties. While our capabilities have evolved, our commitment to patient-centred, evidence-based care remains unchanged.",
-  "At Matru, we believe healthcare goes beyond treating illness. With clinical excellence, empathy, and a multidisciplinary approach, we are committed to supporting every patient through every stage of their healthcare journey.",
+gsap.registerPlugin(ScrollTrigger);
+
+/* ------------------------------------------------------------------ content */
+
+// Mission statement — illuminated word-by-word on scroll. Keywords carry the
+// brand accent. Kept concise so the pinned reveal reads in one deliberate beat.
+const STATEMENT =
+  "For four decades, Mātru has believed that healthcare goes beyond treating illness — it is the art of *prevention*, the science of *cure*, and the *compassion* that carries every patient safely home.";
+
+type Milestone = {
+  tag: string;
+  title: string;
+  body: string;
+  Icon: Icon;
+};
+
+const TIMELINE: Milestone[] = [
+  {
+    tag: "1985",
+    title: "The Beginning",
+    body: "Founded by Dr. Krishna Rajendra — born from his mother's battle with cancer, and a vision of quality, ethical, compassionate care accessible to everyone.",
+    Icon: PlantIcon,
+  },
+  {
+    tag: "25 Beds",
+    title: "Humble Roots",
+    body: "What began as a modest 25-bed nursing clinic, built on compassion, clinical discipline, and an unwavering commitment to the people it served.",
+    Icon: HeartStraightIcon,
+  },
+  {
+    tag: "Evolution",
+    title: "Advancing Care",
+    body: "Advanced infrastructure, modern technology, and comprehensive care across a growing range of specialities — capabilities evolving, values unchanged.",
+    Icon: PulseIcon,
+  },
+  {
+    tag: "100 Beds",
+    title: "Today",
+    body: "A 100-bed multispeciality hospital with 25+ specialities, delivering seamless, patient-centred care under one roof — where prevention meets cure.",
+    Icon: BuildingsIcon,
+  },
+  {
+    tag: "Tomorrow",
+    title: "The Promise",
+    body: "An enduring commitment to patient-centred, evidence-based care — supporting every patient through every stage of their healthcare journey.",
+    Icon: StarFourIcon,
+  },
 ];
 
 const STATS = [
@@ -19,48 +70,48 @@ const STATS = [
   { value: "25+", label: "Specialities" },
 ];
 
-const MOTTO = [
-  "At Matru Multispeciality Hospital, “Where Prevention Meets Cure” is more than our motto — it defines our approach to healthcare. We believe the best outcomes come from preventing illness, detecting conditions early, and delivering timely, tailored treatment when it matters most.",
-  "From preventive screenings and advanced diagnostics to specialised treatments, rehabilitation, and follow-up care, we provide seamless, comprehensive healthcare under one roof. Backed by experienced specialists, modern technology, and evidence-based medicine, our focus is on helping every patient achieve better health at every stage of life.",
-  "For us, healthcare is not just about treating disease — it's about building healthier lives through compassionate, patient-centred care that continues beyond recovery.",
+const MOTTO: { heading: string; body: string; Icon: Icon }[] = [
+  {
+    heading: "Prevention First",
+    Icon: MagnifyingGlassIcon,
+    body: "The best outcomes come from preventing illness, detecting conditions early, and delivering timely, tailored treatment when it matters most.",
+  },
+  {
+    heading: "Comprehensive Care",
+    Icon: StethoscopeIcon,
+    body: "From preventive screenings and advanced diagnostics to specialised treatments, rehabilitation, and follow-up — seamless healthcare under one roof.",
+  },
+  {
+    heading: "Beyond Recovery",
+    Icon: HeartStraightIcon,
+    body: "Healthcare isn't just about treating disease — it's about building healthier lives through compassionate care that continues beyond recovery.",
+  },
 ];
 
-// Icons paired 1:1 with MOTTO, echoing each pillar's theme (screening/early
-// detection, clinical treatment, and long-term compassionate care).
-const MOTTO_ICONS = [MagnifyingGlassIcon, StethoscopeIcon, HeartStraightIcon];
+const CHAIRMAN = {
+  name: "Dr. Mahendra SK",
+  role: "Chairman & Chief Orthopaedic Surgeon",
+  message:
+    "Every brick of Matru has been laid with a vision of compassionate service and an unwavering commitment to patient care. Our greatest achievement is not the institution we have built, but the trust we have earned. As Chairman, I pledge to uphold the values that define Matru — with integrity, compassion, and innovation. Together, we will continue to save lives and advance the frontiers of medicine.",
+};
 
-const CHAIRMAN =
-  "Every brick of Matru has been laid with a vision of compassionate service and an unwavering commitment to patient care. Every patient treated and every surgery performed has brought us closer to our pursuit of clinical excellence. Our greatest achievement is not the institution we have built, but the trust we have earned. As Chairman, I pledge to uphold the values and principles that define Matru — with integrity, compassion, and innovation. Together, we will continue to save lives, advance the frontiers of medicine and serve with the same dedication that built this institution.";
-
-// Placeholder leadership messages — professional filler copy (not literal
-// Latin lorem ipsum) written in-voice, to be swapped for the real quotes.
 const OTHERS = [
   {
     name: "Ms. Preeti Mahendra",
     role: "Chief Executive Officer",
     message:
-      "At Matru, leadership means listening — to our patients, our clinicians, and the community we serve. Every process we refine and every service we introduce is measured against one question: does this make care simpler, safer, and more human? I'm proud of the team that shows up each day with that purpose, and committed to building an experience that earns trust at every visit.",
+      "Leadership means listening — to our patients, our clinicians, and the community we serve. Every service we introduce is measured against one question: does this make care simpler, safer, and more human?",
   },
   {
     name: "Mrs. Vijayalaxmi Mahendra",
     role: "Administrative Director",
     message:
-      "Great healthcare is built on the details patients rarely see — the coordination, the readiness, the quiet discipline that keeps every department working as one. My focus has always been on strengthening that foundation, so that when someone walks through our doors, everything simply works, exactly when it matters most.",
+      "Great healthcare is built on the details patients rarely see — the coordination, the readiness, the quiet discipline that keeps every department working as one, exactly when it matters most.",
   },
 ];
 
-// Reuses phrases already stated elsewhere on the page — no new claims, just a
-// decorative ticker.
-const MARQUEE_ITEMS = [
-  "EST. 1985",
-  "100-BED HOSPITAL",
-  "MULTISPECIALITY CARE",
-  "WHERE PREVENTION MEETS CURE",
-];
+/* ------------------------------------------------------------------ helpers */
 
-// Split a stat value like "25+" into an animatable number and its suffix, so
-// the JSX always renders the exact original string (also the reduced-motion /
-// no-JS fallback).
 function parseStat(value: string) {
   const match = value.match(/^(\d+)(\D*)$/);
   return {
@@ -79,85 +130,51 @@ function monogram(name: string) {
   return letters.toUpperCase();
 }
 
-function SectionRule({ index, label }: { index: string; label: string }) {
+// Render the statement as per-word spans; words wrapped in *asterisks* get the
+// brand accent. Every word is a `.stmt-word` for the scroll illumination.
+function StatementWords() {
   return (
-    <div className="reveal-el flex items-center gap-5">
-      <span className="font-[family-name:var(--font-display)] text-3xl font-bold leading-none text-primary-500 sm:text-4xl">
-        {index}
-      </span>
-      <span className="h-px flex-1 max-w-[3.5rem] bg-gradient-to-r from-primary-500/70 to-transparent" />
-      <span className="text-xs font-semibold uppercase tracking-[0.28em] text-slate-400">
-        {label}
-      </span>
-      <span className="h-px flex-1 bg-white/10" />
-    </div>
+    <>
+      {STATEMENT.split(" ").map((raw, i) => {
+        // Words wrapped in *asterisks* (punctuation may trail) get the accent.
+        const accent = raw.includes("*");
+        const word = raw.replace(/\*/g, "");
+        return (
+          <span
+            key={i}
+            className={`stmt-word inline-block ${accent ? "text-primary-500" : ""}`}
+          >
+            {word}
+            {" "}
+          </span>
+        );
+      })}
+    </>
   );
 }
 
-/** Oversized outlined numeral, sitting behind a section's content as ambient
- *  editorial typography. Purely decorative — echoes the section's own index. */
-function GhostNumber({ children }: { children: string }) {
-  return (
-    <span
-      aria-hidden="true"
-      className="ghost-num pointer-events-none absolute -top-6 left-1/2 z-0 -translate-x-1/2 select-none text-[8rem] leading-none sm:-top-10 sm:text-[12rem] lg:text-[15rem]"
-    >
-      {children}
-    </span>
-  );
-}
-
-/** A masked, line-by-line rising heading. Each line clips inside its row and
- *  slides up when the wrapping element gains `.is-in`. */
-function MaskLine({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
-  return (
-    <span className="block overflow-hidden py-[0.05em]">
-      <span className="mask-ln block" style={{ transitionDelay: `${delay}s` }}>
-        {children}
-      </span>
-    </span>
-  );
-}
-
-/** Looping ticker row — content is duplicated so translating by -50% loops
- *  seamlessly. Decorative only, so it's hidden from assistive tech. */
-function Marquee({
-  items,
-  className,
-}: {
-  items: string[];
-  className: string;
-}) {
-  return (
-    <div className="marquee-track" aria-hidden="true">
-      {[...items, ...items].map((item, i) => (
-        <span key={i} className={className}>
-          {item}
-        </span>
-      ))}
-    </div>
-  );
-}
+/* ----------------------------------------------------------------- component */
 
 export default function AboutContent() {
   const root = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const el = root.current;
     if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    // rAF count-up that lands on the exact original value.
+    // Count-up that lands on the exact original value.
     const runCount = (node: HTMLElement) => {
       if (node.dataset.counted) return;
       node.dataset.counted = "1";
       const target = Number(node.dataset.value || "0");
       const suffix = node.dataset.suffix || "";
-      const duration = 1600;
       const start = performance.now();
+      const dur = 1700;
       const tick = (now: number) => {
-        const p = Math.min(1, (now - start) / duration);
+        const p = Math.min(1, (now - start) / dur);
         const eased = 1 - Math.pow(1 - p, 3);
         node.textContent = Math.round(eased * target) + suffix;
         if (p < 1) requestAnimationFrame(tick);
@@ -166,201 +183,196 @@ export default function AboutContent() {
       requestAnimationFrame(tick);
     };
 
-    const reveal = (node: HTMLElement) => {
-      node.classList.add("is-in");
-      node.querySelectorAll<HTMLElement>(".js-count").forEach(runCount);
-    };
-
-    const targets = Array.from(
-      el.querySelectorAll<HTMLElement>(".reveal-el, .mask-wrap")
-    );
-
-    // Reveal anything already in view on mount (hero, and on tall viewports the
-    // first section) without waiting for a scroll.
-    const vh = window.innerHeight;
-    targets.forEach((node) => {
-      if (node.getBoundingClientRect().top < vh * 0.9) reveal(node);
-    });
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          reveal(entry.target as HTMLElement);
-          io.unobserve(entry.target);
-        });
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
-    );
-
-    targets.forEach((node) => {
-      if (!node.classList.contains("is-in")) io.observe(node);
-    });
-
-    // Reading-progress rail — tracks scroll position across the About page.
-    const bar = progressRef.current;
-    let ticking = false;
-    const updateProgress = () => {
-      ticking = false;
-      if (!bar) return;
-      const total = el.offsetHeight - window.innerHeight;
-      const scrolled = -el.getBoundingClientRect().top;
-      const p = total > 0 ? Math.min(1, Math.max(0, scrolled / total)) : 0;
-      bar.style.transform = `scaleX(${p})`;
-    };
-    const onScroll = () => {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(updateProgress);
-      }
-    };
-    updateProgress();
-    window.addEventListener("scroll", onScroll, { passive: true });
-
-    // Pointer-only flourishes: a cursor-reactive hero glow and a gentle
-    // magnetic tilt on cards. Skipped on touch devices.
-    let cleanupPointer = () => {};
-    if (window.matchMedia("(pointer: fine)").matches) {
-      const heroZone = el.querySelector<HTMLElement>(".hero-spot-zone");
-      const spotlight = el.querySelector<HTMLElement>(".hero-spotlight");
-      const onHeroMove = (e: MouseEvent) => {
-        if (!heroZone || !spotlight) return;
-        const r = heroZone.getBoundingClientRect();
-        spotlight.style.setProperty(
-          "--sx",
-          `${((e.clientX - r.left) / r.width) * 100}%`
-        );
-        spotlight.style.setProperty(
-          "--sy",
-          `${((e.clientY - r.top) / r.height) * 100}%`
-        );
-      };
-      heroZone?.addEventListener("mousemove", onHeroMove);
-
-      const tiltCards = Array.from(
-        el.querySelectorAll<HTMLElement>(".tilt-card")
+    if (reduce) {
+      // Static, fully-legible fallback.
+      el.querySelectorAll<HTMLElement>(".stmt-word").forEach(
+        (n) => (n.style.opacity = "1")
       );
-      const onTiltMove = (e: MouseEvent) => {
-        const card = e.currentTarget as HTMLElement;
-        const r = card.getBoundingClientRect();
-        const px = (e.clientX - r.left) / r.width - 0.5;
-        const py = (e.clientY - r.top) / r.height - 0.5;
-        card.style.transform = `perspective(900px) rotateX(${(-py * 7).toFixed(
-          2
-        )}deg) rotateY(${(px * 9).toFixed(2)}deg) translateY(-4px)`;
-      };
-      const onTiltLeave = (e: MouseEvent) => {
-        (e.currentTarget as HTMLElement).style.transform = "";
-      };
-      tiltCards.forEach((c) => {
-        c.addEventListener("mousemove", onTiltMove);
-        c.addEventListener("mouseleave", onTiltLeave);
-      });
-
-      cleanupPointer = () => {
-        heroZone?.removeEventListener("mousemove", onHeroMove);
-        tiltCards.forEach((c) => {
-          c.removeEventListener("mousemove", onTiltMove);
-          c.removeEventListener("mouseleave", onTiltLeave);
-        });
-      };
+      el.querySelectorAll<HTMLElement>(".js-count").forEach(runCount);
+      return;
     }
 
+    const ctx = gsap.context(() => {
+      /* Hero — headline mask reveal on load */
+      gsap.set(".hero-line", { yPercent: 120 });
+      gsap.to(".hero-line", {
+        yPercent: 0,
+        duration: 1.15,
+        ease: "expo.out",
+        stagger: 0.12,
+        delay: 0.15,
+      });
+      gsap.from(".hero-fade", {
+        opacity: 0,
+        y: 24,
+        duration: 1,
+        ease: "power3.out",
+        stagger: 0.1,
+        delay: 0.5,
+      });
+
+      /* Hero — parallax on scroll */
+      gsap.to(".hero-content", {
+        yPercent: -14,
+        opacity: 0.15,
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".hero-section",
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+      gsap.to(".hero-watermark", {
+        yPercent: 22,
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".hero-section",
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+
+      /* Generic reveal-up */
+      gsap.set(".lux-up", { opacity: 0, y: 46 });
+      ScrollTrigger.batch(".lux-up", {
+        start: "top 86%",
+        onEnter: (b) =>
+          gsap.to(b, {
+            opacity: 1,
+            y: 0,
+            duration: 1.1,
+            ease: "power3.out",
+            stagger: 0.12,
+            overwrite: true,
+          }),
+      });
+
+      /* Mission statement — pinned, word-by-word illumination */
+      gsap.set(".stmt-word", { opacity: 0.16 });
+      const stmtTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".stmt-section",
+          start: "top top",
+          end: "+=120%",
+          scrub: 0.6,
+          pin: true,
+          anticipatePin: 1,
+        },
+      });
+      stmtTl.to(".stmt-word", { opacity: 1, ease: "none", stagger: 0.4 });
+
+      /* Legacy — pinned horizontal timeline */
+      const track = trackRef.current;
+      if (track) {
+        const getScroll = () => track.scrollWidth - window.innerWidth;
+        const tlTween = gsap.to(track, {
+          x: () => -getScroll(),
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".tl-section",
+            start: "top top",
+            end: () => `+=${getScroll()}`,
+            pin: true,
+            scrub: 1,
+            invalidateOnRefresh: true,
+          },
+        });
+        // Each panel's inner content eases up as it crosses the viewport,
+        // driven by the horizontal track motion (containerAnimation).
+        gsap.utils.toArray<HTMLElement>(".tl-panel-inner").forEach((inner) => {
+          gsap.fromTo(
+            inner,
+            { y: 48, opacity: 0.3 },
+            {
+              y: 0,
+              opacity: 1,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: inner,
+                containerAnimation: tlTween,
+                start: "left 88%",
+                end: "left 52%",
+                scrub: true,
+              },
+            }
+          );
+        });
+      }
+
+      /* Stats — count-up on enter */
+      ScrollTrigger.create({
+        trigger: ".stats-band",
+        start: "top 80%",
+        once: true,
+        onEnter: () =>
+          el.querySelectorAll<HTMLElement>(".js-count").forEach(runCount),
+      });
+
+      /* Reading-progress rail */
+      const bar = progressRef.current;
+      if (bar) {
+        gsap.to(bar, {
+          scaleX: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: el,
+            start: "top top",
+            end: "bottom bottom",
+            scrub: true,
+          },
+        });
+      }
+
+      /* Cursor-reactive hero glow (desktop only) */
+      if (window.matchMedia("(pointer: fine)").matches) {
+        const zone = el.querySelector<HTMLElement>(".hero-section");
+        const spot = el.querySelector<HTMLElement>(".hero-spotlight");
+        const onMove = (e: MouseEvent) => {
+          if (!zone || !spot) return;
+          const r = zone.getBoundingClientRect();
+          spot.style.setProperty("--sx", `${((e.clientX - r.left) / r.width) * 100}%`);
+          spot.style.setProperty("--sy", `${((e.clientY - r.top) / r.height) * 100}%`);
+        };
+        zone?.addEventListener("mousemove", onMove);
+        return () => zone?.removeEventListener("mousemove", onMove);
+      }
+    }, el);
+
+    // Settle after fonts / preloader release.
+    const t = window.setTimeout(() => ScrollTrigger.refresh(), 350);
+
     return () => {
-      io.disconnect();
-      window.removeEventListener("scroll", onScroll);
-      cleanupPointer();
+      window.clearTimeout(t);
+      ctx.revert();
     };
   }, []);
 
   return (
     <div ref={root} className="about-scope relative overflow-x-clip bg-[#0a0b0d]">
       <style>{`
-        .about-scope .reveal-el {
-          opacity: 0;
-          transform: translateY(40px);
-          transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
-            transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .about-scope .reveal-el.is-in {
-          opacity: 1;
-          transform: none;
-        }
-        .about-scope .mask-ln {
-          transform: translateY(115%);
-          transition: transform 1.05s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .about-scope .mask-wrap.is-in .mask-ln {
-          transform: none;
-        }
-        .about-scope .marquee-track {
-          display: flex;
-          width: max-content;
-          animation: about-marquee 26s linear infinite;
-        }
-        .about-scope .marquee-track:hover {
-          animation-play-state: paused;
-        }
-        @keyframes about-marquee {
-          from { transform: translateX(0); }
-          to { transform: translateX(-50%); }
-        }
-        .about-scope .reveal-line {
-          transform: scaleX(0);
-          transform-origin: 0% 50%;
-          transition: transform 1.3s cubic-bezier(0.16, 1, 0.3, 1) 0.25s;
-        }
-        .about-scope .reveal-el.is-in .reveal-line {
-          transform: scaleX(1);
-        }
-        .about-scope .ghost-num {
-          font-family: var(--font-display);
-          font-weight: 800;
-          color: transparent;
-          -webkit-text-stroke: 1px rgba(255, 255, 255, 0.07);
-        }
-        .about-scope .progress-fill {
-          transform: scaleX(0);
-          transform-origin: 0% 0%;
-          transition: transform 0.12s linear;
-        }
-        @property --ring-angle {
-          syntax: "<angle>";
-          inherits: false;
-          initial-value: 0deg;
-        }
+        .about-scope .progress-fill { transform: scaleX(0); transform-origin: 0 0; }
+        @property --lux-ring { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
         .about-scope .leader-ring {
-          background: conic-gradient(
-            from var(--ring-angle),
-            var(--color-primary-500) 0deg,
-            var(--color-secondary-400) 120deg,
-            transparent 200deg,
-            var(--color-primary-400) 280deg,
-            var(--color-primary-500) 360deg
-          );
-          animation: about-ring-spin 5s linear infinite;
+          background: conic-gradient(from var(--lux-ring),
+            var(--color-primary-500) 0deg, var(--color-secondary-400) 120deg,
+            transparent 200deg, var(--color-primary-400) 280deg, var(--color-primary-500) 360deg);
+          animation: lux-ring-spin 5s linear infinite;
         }
-        @keyframes about-ring-spin {
-          to { --ring-angle: 360deg; }
+        @keyframes lux-ring-spin { to { --lux-ring: 360deg; } }
+        .about-scope .marquee-track {
+          display: flex; width: max-content; animation: about-marquee 30s linear infinite;
         }
+        @keyframes about-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
         @media (prefers-reduced-motion: reduce) {
-          .about-scope .reveal-el,
-          .about-scope .mask-ln,
-          .about-scope .reveal-line {
-            opacity: 1 !important;
-            transform: none !important;
-            transition: none !important;
-          }
-          .about-scope .marquee-track,
-          .about-scope .leader-ring {
-            animation: none !important;
-          }
+          .about-scope .leader-ring, .about-scope .marquee-track { animation: none !important; }
         }
       `}</style>
 
       {/* Reading-progress rail */}
       <div
-        className="pointer-events-none fixed inset-x-0 top-0 z-[60] h-[3px] bg-white/[0.07]"
+        className="pointer-events-none fixed inset-x-0 top-0 z-[60] h-[3px] bg-white/[0.06]"
         aria-hidden="true"
       >
         <div
@@ -369,339 +381,415 @@ export default function AboutContent() {
         />
       </div>
 
-      {/* ===== Hero ===== */}
-      <section className="hero-spot-zone relative flex min-h-screen w-full flex-col justify-center overflow-hidden px-6 pb-24 pt-40 sm:px-10 lg:px-16">
-        {/* Ambient glows */}
+      {/* ============================================================ HERO */}
+      <section className="hero-section relative flex min-h-screen w-full flex-col justify-center overflow-hidden px-6 pb-24 pt-40 sm:px-10 lg:px-16">
         <div
-          className="animate-hero-float pointer-events-none absolute -right-32 top-24 -z-0 h-[34rem] w-[34rem] rounded-full bg-primary-500/12 blur-[150px]"
+          className="animate-hero-float pointer-events-none absolute -right-40 top-10 h-[38rem] w-[38rem] rounded-full bg-primary-500/14 blur-[170px]"
           aria-hidden="true"
         />
         <div
-          className="pointer-events-none absolute -left-40 bottom-0 -z-0 h-[30rem] w-[30rem] rounded-full bg-secondary-500/10 blur-[160px]"
+          className="animate-hero-float pointer-events-none absolute -left-40 bottom-0 h-[30rem] w-[30rem] rounded-full bg-secondary-500/12 blur-[160px]"
           aria-hidden="true"
+          style={{ animationDelay: "-6s" }}
         />
-        {/* Cursor-reactive spotlight */}
         <div
-          className="hero-spotlight pointer-events-none absolute inset-0 -z-0 transition-opacity duration-500"
+          className="hero-spotlight pointer-events-none absolute inset-0"
           aria-hidden="true"
           style={{
             background:
-              "radial-gradient(560px circle at var(--sx, 65%) var(--sy, 25%), rgba(245,131,37,0.14), transparent 62%)",
+              "radial-gradient(600px circle at var(--sx,70%) var(--sy,20%), rgba(245,131,37,0.12), transparent 60%)",
           }}
         />
-        {/* Fine grid, faded toward the edges */}
         <div
-          className="pointer-events-none absolute inset-0 -z-0 opacity-[0.5]"
+          className="pointer-events-none absolute inset-0 opacity-[0.5]"
           aria-hidden="true"
           style={{
             backgroundImage:
-              "linear-gradient(to right, rgba(255,255,255,0.045) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.045) 1px, transparent 1px)",
-            backgroundSize: "64px 64px",
+              "linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px)",
+            backgroundSize: "68px 68px",
             maskImage:
-              "radial-gradient(ellipse 80% 65% at 50% 45%, #000 40%, transparent 100%)",
+              "radial-gradient(ellipse 80% 60% at 50% 40%, #000 40%, transparent 100%)",
             WebkitMaskImage:
-              "radial-gradient(ellipse 80% 65% at 50% 45%, #000 40%, transparent 100%)",
+              "radial-gradient(ellipse 80% 60% at 50% 40%, #000 40%, transparent 100%)",
           }}
         />
-        {/* Grain texture */}
+        {/* Giant parallax watermark */}
         <div
-          className="pointer-events-none absolute inset-0 z-[1] opacity-[0.04] mix-blend-overlay"
+          className="hero-watermark pointer-events-none absolute inset-x-0 top-[38%] z-0 flex justify-center overflow-hidden"
           aria-hidden="true"
-          style={{
-            backgroundImage:
-              "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
-            backgroundSize: "180px 180px",
-          }}
-        />
-
-        <div className="relative z-10 mx-auto w-full max-w-7xl">
-          <span className="reveal-el inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.3em] text-primary-300 backdrop-blur-sm">
-            <span className="h-1.5 w-1.5 rounded-full bg-primary-500" />
-            About Mātru
+        >
+          <span
+            className="select-none font-[family-name:var(--font-display)] text-[28vw] font-extrabold leading-none text-transparent"
+            style={{ WebkitTextStroke: "1px rgba(255,255,255,0.045)" }}
+          >
+            MĀTRU
           </span>
-
-          <h1 className="mask-wrap mt-10 font-[family-name:var(--font-display)] text-5xl font-extrabold leading-[0.98] tracking-tight text-white sm:text-7xl lg:text-8xl">
-            <MaskLine>Rooted in legacy,</MaskLine>
-            <MaskLine delay={0.12}>
-              <span className="text-primary-500">built for healing.</span>
-            </MaskLine>
-          </h1>
-
-          <div className="reveal-el mt-14 flex flex-wrap items-center gap-x-10 gap-y-4 border-t border-white/12 pt-8 text-sm uppercase tracking-[0.15em] text-slate-400">
-            <span>Est. 1985</span>
-            <span className="h-1 w-1 rounded-full bg-primary-500" />
-            <span>100-Bed Hospital</span>
-            <span className="h-1 w-1 rounded-full bg-primary-500" />
-            <span>Multispeciality Care</span>
-          </div>
         </div>
 
-        {/* Full-bleed ticker ribbon */}
-        <div className="reveal-el relative z-10 -mx-6 mt-16 overflow-hidden border-y border-white/10 py-4 sm:-mx-10 lg:-mx-16">
-          <Marquee
-            items={MARQUEE_ITEMS}
-            className="flex items-center gap-8 whitespace-nowrap px-8 text-xs font-semibold uppercase tracking-[0.3em] text-slate-500 after:ml-8 after:h-1 after:w-1 after:rounded-full after:bg-primary-500/60 after:content-['']"
-          />
+        <div className="hero-content relative z-10 mx-auto w-full max-w-7xl">
+          <span className="hero-fade inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.3em] text-primary-300 backdrop-blur-sm">
+            <span className="h-1.5 w-1.5 rounded-full bg-primary-500" />
+            About Mātru · Est. 1985
+          </span>
+
+          <h1 className="mt-10 font-[family-name:var(--font-display)] text-6xl font-extrabold leading-[0.92] tracking-tight text-white sm:text-8xl lg:text-[8.5rem]">
+            <span className="block overflow-hidden py-[0.04em]">
+              <span className="hero-line block">Rooted in legacy,</span>
+            </span>
+            <span className="block overflow-hidden py-[0.04em]">
+              <span className="hero-line block text-primary-500">built for healing.</span>
+            </span>
+          </h1>
+
+          <p className="hero-fade mt-10 max-w-xl text-lg leading-relaxed text-slate-400">
+            Four decades of compassionate, ethical, patient-centred care — from a
+            25-bed nursing clinic to a 100-bed multispeciality hospital where
+            prevention meets cure.
+          </p>
         </div>
 
         {/* Scroll cue */}
         <div
-          className="pointer-events-none absolute bottom-10 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2"
+          className="hero-fade pointer-events-none absolute bottom-10 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2"
           aria-hidden="true"
         >
+          <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-slate-500">
+            Scroll
+          </span>
           <span className="flex h-10 w-6 items-start justify-center rounded-full border border-white/15 p-1.5">
             <span className="animate-hero-scroll h-1.5 w-1.5 rounded-full bg-primary-400" />
           </span>
         </div>
       </section>
 
-      {/* ===== 01 · Legacy ===== */}
-      <section className="relative w-full px-6 py-28 sm:px-10 sm:py-36 lg:px-16">
-        <GhostNumber>01</GhostNumber>
-        <div className="relative z-10 mx-auto w-full max-w-7xl">
-          <SectionRule index="01" label="Our Legacy" />
+      {/* ==================================================== MISSION STATEMENT */}
+      <section className="stmt-section relative flex min-h-screen w-full items-center overflow-hidden px-6 sm:px-10 lg:px-16">
+        <div
+          className="pointer-events-none absolute left-1/2 top-1/2 h-[30rem] w-[30rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-500/8 blur-[150px]"
+          aria-hidden="true"
+        />
+        <div className="relative z-10 mx-auto w-full max-w-6xl">
+          <div className="mb-10 flex items-center gap-4 text-xs font-semibold uppercase tracking-[0.32em] text-primary-300">
+            <span className="h-1.5 w-1.5 rounded-full bg-primary-500" />
+            Our Ethos
+          </div>
+          <p className="font-[family-name:var(--font-display)] text-3xl font-bold leading-[1.3] tracking-tight text-white sm:text-5xl sm:leading-[1.28] lg:text-6xl lg:leading-[1.25]">
+            <StatementWords />
+          </p>
+        </div>
+      </section>
 
-          <div className="mt-16 grid gap-14 lg:grid-cols-[0.85fr_1fr] lg:gap-24">
-            <div className="lg:sticky lg:top-32 lg:self-start">
-              <h2 className="mask-wrap font-[family-name:var(--font-display)] text-3xl font-bold leading-[1.05] tracking-tight text-white sm:text-4xl lg:text-5xl">
-                <MaskLine>Four decades of</MaskLine>
-                <MaskLine delay={0.12}>
-                  <span className="text-primary-500">trust &amp; care.</span>
-                </MaskLine>
-              </h2>
-              <div className="reveal-el mt-8 hidden h-px w-24 bg-gradient-to-r from-primary-500 to-transparent lg:block" />
+      {/* ======================================================= LEGACY TIMELINE */}
+      <section className="tl-section relative h-screen w-full overflow-hidden bg-white/[0.015]">
+        {/* Section label — stays fixed while the track slides */}
+        <div className="pointer-events-none absolute left-6 top-28 z-20 flex items-center gap-4 text-xs font-semibold uppercase tracking-[0.32em] text-primary-300 sm:left-10 lg:left-16">
+          <span className="h-1.5 w-1.5 rounded-full bg-primary-500" />
+          Our Legacy
+          <span className="hidden text-slate-600 sm:inline">— Four decades of trust</span>
+        </div>
+
+        <div className="tl-viewport flex h-full items-center">
+          <div
+            ref={trackRef}
+            className="tl-track flex items-stretch gap-6 px-6 sm:gap-8 sm:px-10 lg:px-16"
+          >
+            {/* Intro panel */}
+            <div className="tl-panel flex w-[82vw] shrink-0 items-center sm:w-[52vw] lg:w-[38vw]">
+              <div className="tl-panel-inner">
+                <h2 className="font-[family-name:var(--font-display)] text-4xl font-extrabold leading-[1.02] tracking-tight text-white sm:text-6xl">
+                  Four decades of
+                  <span className="block text-primary-500">trust &amp; care.</span>
+                </h2>
+                <p className="mt-6 max-w-sm text-base leading-relaxed text-slate-400">
+                  A journey from a single clinic to a landmark of multispeciality
+                  medicine — scroll to trace the milestones.
+                </p>
+                <div className="mt-8 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+                  <span className="h-px w-10 bg-primary-500/70" />
+                  1985 → Today
+                </div>
+              </div>
             </div>
 
-            <div className="space-y-8">
-              {LEGACY.map((p, i) => (
-                <p
-                  key={i}
-                  className={`reveal-el leading-relaxed text-slate-400 ${
-                    i === 0
-                      ? "border-l-2 border-primary-500/60 pl-6 text-xl text-slate-200 sm:text-2xl"
-                      : "text-lg sm:text-xl"
-                  }`}
+            {TIMELINE.map((m, i) => {
+              const Icon = m.Icon;
+              return (
+                <div
+                  key={m.tag}
+                  className="tl-panel flex w-[84vw] shrink-0 items-center sm:w-[46vw] lg:w-[30vw]"
                 >
-                  {p}
-                </p>
+                  <div className="tl-panel-inner group relative h-[62vh] w-full overflow-hidden rounded-[var(--radius-surface)] border border-white/10 bg-gradient-to-b from-white/[0.05] to-white/[0.01] p-8 shadow-[0_30px_70px_-40px_rgba(0,0,0,0.9)] sm:p-10">
+                    <span
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary-500/12 via-transparent to-secondary-500/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                    />
+                    {/* Ghost index */}
+                    <span
+                      aria-hidden="true"
+                      className="pointer-events-none absolute -bottom-8 right-1 select-none font-[family-name:var(--font-display)] text-[10rem] font-extrabold leading-none text-transparent"
+                      style={{ WebkitTextStroke: "1px rgba(255,255,255,0.05)" }}
+                    >
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+
+                    <div className="relative flex h-full flex-col">
+                      <span className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/12 bg-white/[0.04] text-primary-300 shadow-lg shadow-black/30">
+                        <Icon size={30} weight="duotone" />
+                      </span>
+
+                      <span className="mt-auto text-sm font-semibold uppercase tracking-[0.24em] text-primary-400">
+                        {m.tag}
+                      </span>
+                      <h3 className="mt-3 font-[family-name:var(--font-display)] text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                        {m.title}
+                      </h3>
+                      <p className="mt-4 max-w-sm text-[15px] leading-relaxed text-slate-400">
+                        {m.body}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+
+            {/* Tail spacer */}
+            <div className="w-[8vw] shrink-0" aria-hidden="true" />
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================== STATS BAND */}
+      <section className="stats-band relative w-full border-t border-white/10 px-6 py-24 sm:px-10 sm:py-28 lg:px-16">
+        <div className="mx-auto grid w-full max-w-7xl gap-5 sm:grid-cols-3">
+          {STATS.map((s) => {
+            const { target, suffix, animatable } = parseStat(s.value);
+            return (
+              <div
+                key={s.label}
+                className="lux-up group relative overflow-hidden rounded-[var(--radius-surface)] border border-white/10 bg-white/[0.02] p-8 transition-colors duration-500 hover:border-primary-500/40 sm:p-10"
+              >
+                <div
+                  className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-primary-500/10 blur-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                  aria-hidden="true"
+                />
+                <div className="relative font-[family-name:var(--font-display)] text-6xl font-bold tracking-tight text-primary-500 sm:text-7xl">
+                  {animatable ? (
+                    <span className="js-count" data-value={target} data-suffix={suffix}>
+                      0{suffix}
+                    </span>
+                  ) : (
+                    s.value
+                  )}
+                </div>
+                <div className="relative mt-4 flex items-center gap-3 text-sm uppercase tracking-[0.2em] text-slate-400">
+                  <span className="h-px w-6 bg-primary-500/60" />
+                  {s.label}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* =============================================================== MOTTO */}
+      <section className="relative w-full overflow-hidden border-t border-white/10 px-6 py-24 sm:px-10 sm:py-32 lg:px-16">
+        {/* Ambient brand glows (no flat watermark) */}
+        <div
+          className="pointer-events-none absolute -left-32 top-24 h-[26rem] w-[26rem] rounded-full bg-primary-500/8 blur-[150px]"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute -right-32 bottom-0 h-[24rem] w-[24rem] rounded-full bg-secondary-500/8 blur-[150px]"
+          aria-hidden="true"
+        />
+
+        <div className="relative z-10 mx-auto w-full max-w-7xl">
+          <div className="lux-up flex items-center gap-4 text-xs font-semibold uppercase tracking-[0.32em] text-primary-300">
+            <span className="h-1.5 w-1.5 rounded-full bg-primary-500" />
+            Our Motto
+            <span className="hidden h-px flex-1 bg-white/10 sm:block" />
+            <span className="hidden text-slate-500 sm:block">Three Pillars</span>
+          </div>
+
+          <div className="mt-12 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
+            <h2 className="lux-up font-[family-name:var(--font-display)] text-5xl font-extrabold leading-[0.98] tracking-tight text-white sm:text-7xl lg:text-[5.5rem]">
+              Where prevention
+              <span className="block text-primary-500">meets cure.</span>
+            </h2>
+            <p className="lux-up max-w-xs text-base leading-relaxed text-slate-400 lg:pb-3">
+              Three principles guide every decision we make — from the first
+              screening to the final follow-up.
+            </p>
+          </div>
+
+          <div className="mt-16 grid gap-6 md:grid-cols-3">
+            {MOTTO.map((m, i) => {
+              const Icon = m.Icon;
+              return (
+                <div
+                  key={m.heading}
+                  className="lux-up group relative flex flex-col overflow-hidden rounded-[var(--radius-surface)] border border-white/10 bg-gradient-to-b from-white/[0.06] to-white/[0.015] p-8 shadow-[0_20px_50px_-30px_rgba(0,0,0,0.9)] transition-all duration-500 hover:-translate-y-1.5 hover:border-primary-500/40 hover:shadow-[0_40px_90px_-45px_rgba(245,131,37,0.45)] sm:p-9"
+                >
+                  {/* top accent line, reveals on hover */}
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary-500 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                  />
+                  {/* corner glow */}
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute -right-16 -top-16 h-44 w-44 rounded-full bg-primary-500/12 blur-3xl opacity-0 transition-opacity duration-700 group-hover:opacity-100"
+                  />
+                  {/* faint sheen */}
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/[0.04] to-transparent"
+                  />
+
+                  <div className="relative flex items-center justify-between">
+                    <span className="relative flex h-16 w-16 items-center justify-center rounded-2xl border border-primary-500/25 bg-gradient-to-br from-primary-500/25 to-primary-500/[0.04] text-primary-200 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_10px_30px_-12px_rgba(245,131,37,0.5)] transition-all duration-500 group-hover:border-primary-500/50 group-hover:from-primary-500/35">
+                      <Icon size={30} weight="duotone" />
+                    </span>
+                    <span
+                      className="select-none font-[family-name:var(--font-display)] text-5xl font-extrabold leading-none text-transparent"
+                      style={{ WebkitTextStroke: "1px rgba(255,255,255,0.12)" }}
+                    >
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                  </div>
+
+                  <span
+                    aria-hidden="true"
+                    className="relative mt-8 h-px w-full bg-gradient-to-r from-white/20 via-white/8 to-transparent"
+                  />
+
+                  <h3 className="relative mt-6 font-[family-name:var(--font-display)] text-2xl font-bold tracking-tight text-white">
+                    {m.heading}
+                  </h3>
+                  <p className="relative mt-3 text-[15px] leading-relaxed text-slate-400">
+                    {m.body}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================= LEADERSHIP */}
+      <section className="relative w-full border-t border-white/10 px-6 py-24 sm:px-10 sm:py-32 lg:px-16">
+        <div className="relative z-10 mx-auto w-full max-w-7xl">
+          <div className="lux-up flex items-center gap-4 text-xs font-semibold uppercase tracking-[0.32em] text-primary-300">
+            <span className="h-1.5 w-1.5 rounded-full bg-primary-500" />
+            Voices of Mātru
+            <span className="hidden h-px flex-1 bg-white/10 sm:block" />
+            <span className="hidden text-slate-500 sm:block">Leadership</span>
+          </div>
+
+          <div className="mt-14 grid gap-5 lg:grid-cols-[1.25fr_1fr] lg:items-stretch">
+            <LeaderCard {...CHAIRMAN} feature />
+            <div className="grid gap-5">
+              {OTHERS.map((m) => (
+                <LeaderCard key={m.name} {...m} />
               ))}
             </div>
           </div>
 
-          {/* Stats — premium cards */}
-          <div className="mt-24 grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-6">
-            {STATS.map((s) => {
-              const { target, suffix, animatable } = parseStat(s.value);
-              return (
-                <div key={s.label} className="reveal-el">
-                  <div className="tilt-card group relative overflow-hidden rounded-[var(--radius-surface)] border border-white/10 bg-white/[0.02] p-8 transition-[background-color,border-color,box-shadow] duration-500 will-change-transform hover:border-primary-500/40 hover:bg-white/[0.04] hover:shadow-[0_24px_70px_-30px_rgba(245,131,37,0.3)] sm:p-10">
-                    <div
-                      className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-primary-500/10 blur-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                      aria-hidden="true"
-                    />
-                    <div className="relative">
-                      <div className="font-[family-name:var(--font-display)] text-6xl font-bold tracking-tight text-primary-500 sm:text-7xl">
-                        {animatable ? (
-                          <span
-                            className="js-count"
-                            data-value={target}
-                            data-suffix={suffix}
-                          >
-                            {s.value}
-                          </span>
-                        ) : (
-                          s.value
-                        )}
-                      </div>
-                      <div className="mt-4 flex items-center gap-3 text-sm uppercase tracking-[0.2em] text-slate-400">
-                        <span className="h-px w-6 bg-primary-500/60" />
-                        {s.label}
-                      </div>
-                    </div>
-                  </div>
+          {/* Closing CTA */}
+          <div className="lux-up mt-16">
+            <div className="bg-brand-gradient relative overflow-hidden rounded-[var(--radius-surface)] p-8 shadow-lg shadow-primary-500/20 sm:p-12">
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 opacity-[0.18] [background-image:radial-gradient(rgba(255,255,255,0.6)_1px,transparent_1px)] [background-size:12px_12px]"
+              />
+              <div className="relative flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
+                <div>
+                  <h3 className="font-[family-name:var(--font-display)] text-2xl font-bold text-white sm:text-3xl">
+                    Experience care, the Mātru way.
+                  </h3>
+                  <p className="mt-2 max-w-xl text-sm leading-relaxed text-white/90">
+                    Explore our centres of excellence or book a consultation with
+                    the specialists behind four decades of trusted care.
+                  </p>
                 </div>
-              );
-            })}
-          </div>
-
-          {/* Growth line — 1985 founding to today, drawn in on reveal */}
-          <div className="reveal-el mt-14 flex flex-col items-center gap-3 sm:flex-row sm:gap-6">
-            <span className="whitespace-nowrap text-xs font-semibold uppercase tracking-[0.2em] text-primary-400">
-              1985 · Founded
-            </span>
-            <span className="relative h-px w-full flex-1 overflow-hidden bg-white/10">
-              <span className="reveal-line absolute inset-0 bg-gradient-to-r from-primary-500 via-secondary-500 to-primary-500" />
-            </span>
-            <span className="whitespace-nowrap text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
-              Today · 100-Bed Hospital
-            </span>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== 02 · Motto ===== */}
-      <section className="relative w-full overflow-hidden border-t border-white/10 bg-white/[0.015] px-6 py-28 sm:px-10 sm:py-40 lg:px-16">
-        <GhostNumber>02</GhostNumber>
-        <div
-          className="pointer-events-none absolute right-1/4 top-1/3 -z-0 h-[26rem] w-[26rem] rounded-full bg-secondary-500/8 blur-[150px]"
-          aria-hidden="true"
-        />
-        {/* Kinetic watermark, echoing the motto itself */}
-        <div
-          className="pointer-events-none absolute inset-x-0 top-1/2 z-0 -translate-y-1/2 overflow-hidden opacity-[0.05]"
-          aria-hidden="true"
-        >
-          <Marquee
-            items={["PREVENTION", "PREVENTION", "PREVENTION"]}
-            className="whitespace-nowrap px-8 font-[family-name:var(--font-display)] text-[10rem] font-extrabold leading-none text-white sm:text-[14rem]"
-          />
-        </div>
-
-        <div className="relative z-10 mx-auto w-full max-w-7xl">
-          <SectionRule index="02" label="Our Motto" />
-
-          <h2 className="mask-wrap mt-16 font-[family-name:var(--font-display)] text-4xl font-extrabold leading-[0.98] tracking-tight text-white sm:text-6xl lg:text-[5.5rem]">
-            <MaskLine>Where prevention</MaskLine>
-            <MaskLine delay={0.12}>
-              <span className="text-primary-500">meets cure.</span>
-            </MaskLine>
-          </h2>
-
-          <div className="mt-16 grid gap-px overflow-hidden rounded-[var(--radius-surface)] border border-white/10 bg-white/[0.04] md:grid-cols-3">
-            {MOTTO.map((p, i) => {
-              const Icon = MOTTO_ICONS[i];
-              return (
-                <div key={i} className="reveal-el">
-                  <div className="tilt-card group relative h-full bg-[#0a0b0d] p-8 transition-colors duration-500 will-change-transform hover:bg-white/[0.03] sm:p-10">
-                    <div className="flex items-center gap-3">
-                      <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-primary-400 transition-colors duration-500 group-hover:border-primary-500/40">
-                        <Icon size={18} weight="duotone" />
-                      </span>
-                      <span className="font-[family-name:var(--font-display)] text-lg font-bold text-primary-500">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                    </div>
-                    <span
-                      className="mt-6 block h-px w-full bg-white/10 transition-colors duration-500 group-hover:bg-primary-500/40"
-                      aria-hidden="true"
-                    />
-                    <p className="mt-6 text-base leading-relaxed text-slate-400 sm:text-lg">
-                      {p}
-                    </p>
-                  </div>
+                <div className="flex flex-wrap gap-3">
+                  <a
+                    href="/departments"
+                    className="group inline-flex items-center gap-3 bg-white py-2.5 pl-5 pr-2.5 text-sm font-semibold text-primary-700 shadow-md transition-all duration-300 hover:bg-primary-50"
+                  >
+                    View Departments
+                    <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-primary-200 bg-primary-100 text-primary-700 transition-colors duration-300 group-hover:bg-primary-200">
+                      <ArrowUpRightIcon size={16} weight="bold" />
+                    </span>
+                  </a>
+                  <a
+                    href="#book-appointment"
+                    className="inline-flex items-center gap-2 border border-white/70 px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-300 hover:bg-white/10"
+                  >
+                    Book appointment
+                  </a>
                 </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== 03 · Leadership ===== */}
-      <section className="relative w-full border-t border-white/10 px-6 py-28 sm:px-10 sm:py-36 lg:px-16">
-        <GhostNumber>03</GhostNumber>
-        <div className="relative z-10 mx-auto w-full max-w-7xl">
-          <SectionRule index="03" label="Voices of Mātru" />
-
-          {/* Chairman */}
-          <figure className="mt-16 grid gap-12 lg:grid-cols-[0.55fr_1fr] lg:gap-24">
-            <figcaption className="lg:sticky lg:top-32 lg:self-start">
-              <div className="reveal-el relative flex h-24 w-24 items-center justify-center">
-                <span
-                  className="leader-ring absolute inset-0 rounded-full p-[2px]"
-                  aria-hidden="true"
-                >
-                  <span className="block h-full w-full rounded-full bg-[#0a0b0d]" />
-                </span>
-                <span className="relative flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-primary-400 to-primary-600 font-[family-name:var(--font-display)] text-xl font-bold text-white shadow-lg shadow-primary-500/30">
-                  MS
-                </span>
               </div>
-              <p className="reveal-el mt-6 text-xl font-semibold text-white">
-                Dr. Mahendra SK
-              </p>
-              <p className="reveal-el text-sm uppercase tracking-[0.15em] text-primary-400">
-                Chairman &amp; Chief Orthopaedic Surgeon
-              </p>
-            </figcaption>
-
-            <blockquote
-              className="reveal-el relative overflow-hidden rounded-[var(--radius-surface)] border border-white/10 p-8 text-2xl font-medium leading-[1.5] tracking-tight text-slate-200 sm:p-12 sm:text-[2rem] sm:leading-[1.45]"
-              style={{
-                backgroundImage:
-                  "radial-gradient(120% 140% at 10% -10%, rgba(245,131,37,0.08), transparent 55%)",
-                backgroundColor: "rgba(255,255,255,0.02)",
-              }}
-            >
-              <span
-                className="pointer-events-none absolute -left-1 -top-8 font-[family-name:var(--font-display)] text-[9rem] leading-none text-primary-500/15"
-                aria-hidden="true"
-              >
-                &ldquo;
-              </span>
-              <span
-                className="pointer-events-none absolute -bottom-16 -right-1 rotate-180 font-[family-name:var(--font-display)] text-[9rem] leading-none text-primary-500/10"
-                aria-hidden="true"
-              >
-                &ldquo;
-              </span>
-              <span className="relative">{CHAIRMAN}</span>
-            </blockquote>
-          </figure>
-
-          {/* CEO + Admin — same figure treatment as the Chairman above */}
-          <div className="mt-24 space-y-20 border-t border-white/10 pt-24">
-            {OTHERS.map((m) => (
-              <figure
-                key={m.name}
-                className="grid gap-12 lg:grid-cols-[0.55fr_1fr] lg:gap-24"
-              >
-                <figcaption className="lg:sticky lg:top-32 lg:self-start">
-                  <div className="reveal-el relative flex h-24 w-24 items-center justify-center">
-                    <span
-                      className="leader-ring absolute inset-0 rounded-full p-[2px]"
-                      aria-hidden="true"
-                    >
-                      <span className="block h-full w-full rounded-full bg-[#0a0b0d]" />
-                    </span>
-                    <span className="relative flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-primary-400 to-primary-600 font-[family-name:var(--font-display)] text-xl font-bold text-white shadow-lg shadow-primary-500/30">
-                      {monogram(m.name)}
-                    </span>
-                  </div>
-                  <p className="reveal-el mt-6 text-xl font-semibold text-white">
-                    {m.name}
-                  </p>
-                  <p className="reveal-el text-sm uppercase tracking-[0.15em] text-primary-400">
-                    {m.role}
-                  </p>
-                </figcaption>
-
-                <blockquote
-                  className="reveal-el relative overflow-hidden rounded-[var(--radius-surface)] border border-white/10 p-8 text-2xl font-medium leading-[1.5] tracking-tight text-slate-200 sm:p-12 sm:text-[2rem] sm:leading-[1.45]"
-                  style={{
-                    backgroundImage:
-                      "radial-gradient(120% 140% at 10% -10%, rgba(245,131,37,0.08), transparent 55%)",
-                    backgroundColor: "rgba(255,255,255,0.02)",
-                  }}
-                >
-                  <span
-                    className="pointer-events-none absolute -left-1 -top-8 font-[family-name:var(--font-display)] text-[9rem] leading-none text-primary-500/15"
-                    aria-hidden="true"
-                  >
-                    &ldquo;
-                  </span>
-                  <span
-                    className="pointer-events-none absolute -bottom-16 -right-1 rotate-180 font-[family-name:var(--font-display)] text-[9rem] leading-none text-primary-500/10"
-                    aria-hidden="true"
-                  >
-                    &ldquo;
-                  </span>
-                  <span className="relative">{m.message}</span>
-                </blockquote>
-              </figure>
-            ))}
+            </div>
           </div>
         </div>
       </section>
     </div>
+  );
+}
+
+/* ------------------------------------------------------------- LeaderCard */
+
+function LeaderCard({
+  name,
+  role,
+  message,
+  feature = false,
+}: {
+  name: string;
+  role: string;
+  message: string;
+  feature?: boolean;
+}) {
+  return (
+    <figure className="lux-up h-full">
+      <div className="group relative flex h-full flex-col overflow-hidden rounded-[var(--radius-surface)] border border-white/10 bg-gradient-to-b from-white/[0.05] to-white/[0.01] p-8 shadow-[0_18px_40px_-24px_rgba(0,0,0,0.9)] transition-colors duration-500 hover:border-primary-500/40 sm:p-10">
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary-500/10 via-transparent to-secondary-500/8 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        />
+        <span
+          className="pointer-events-none absolute -left-1 -top-10 font-[family-name:var(--font-display)] text-[9rem] leading-none text-primary-500/15"
+          aria-hidden="true"
+        >
+          &ldquo;
+        </span>
+        <blockquote
+          className={`relative font-medium leading-[1.55] tracking-tight text-slate-200 ${
+            feature ? "text-xl sm:text-[1.7rem] sm:leading-[1.5]" : "text-lg sm:text-xl"
+          }`}
+        >
+          {message}
+        </blockquote>
+        <figcaption className="relative mt-8 flex items-center gap-4 border-t border-white/10 pt-6">
+          <div className="relative flex h-16 w-16 shrink-0 items-center justify-center">
+            <span className="leader-ring absolute inset-0 rounded-full p-[2px]" aria-hidden="true">
+              <span className="block h-full w-full rounded-full bg-[#0a0b0d]" />
+            </span>
+            <span className="relative flex h-[3.25rem] w-[3.25rem] items-center justify-center rounded-full bg-gradient-to-br from-primary-400 to-primary-600 font-[family-name:var(--font-display)] text-sm font-bold text-white shadow-lg shadow-primary-500/30">
+              {monogram(name)}
+            </span>
+          </div>
+          <div className="min-w-0">
+            <p className="truncate font-[family-name:var(--font-display)] text-lg font-bold text-white">
+              {name}
+            </p>
+            <p className="truncate text-xs font-semibold uppercase tracking-[0.15em] text-primary-400">
+              {role}
+            </p>
+          </div>
+        </figcaption>
+      </div>
+    </figure>
   );
 }
