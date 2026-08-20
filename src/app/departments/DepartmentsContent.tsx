@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr";
 import { DEPARTMENTS, type Department } from "./data";
 import TiltCard from "./TiltCard";
+import BlogSection from "./BlogSection";
 
 const pad = (n: number) => String(n + 1).padStart(2, "0");
 
@@ -79,7 +80,7 @@ export default function DepartmentsContent() {
       </section>
 
       {/* ===== The directory grid ===== */}
-      <section className="relative w-full px-6 pb-28 pt-8 sm:px-10 sm:pt-12 lg:px-16">
+      <section className="relative w-full px-6 pb-4 pt-8 sm:px-10 sm:pt-12 lg:px-16">
         <div className="mx-auto grid w-full max-w-7xl gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {DEPARTMENTS.map((d, i) => {
             const Icon = d.Icon;
@@ -162,6 +163,9 @@ export default function DepartmentsContent() {
           })}
         </div>
       </section>
+
+      {/* ===== Journal / blog ===== */}
+      <BlogSection />
     </div>
   );
 }

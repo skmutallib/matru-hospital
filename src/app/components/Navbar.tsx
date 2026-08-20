@@ -17,15 +17,28 @@ const hrefFor = (link: string) => ROUTES[link] ?? `#${link.toLowerCase()}`;
 export default function Navbar() {
   return (
     <header className="animate-navbar-drop fixed inset-x-0 top-4 z-50 px-4 sm:px-6">
-      <nav className="relative mx-auto grid max-w-7xl grid-cols-[1fr_auto_1fr] items-center overflow-hidden border border-white/10 bg-gradient-to-b from-neutral-900/90 to-neutral-950/90 px-4 py-2.5 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.6)] ring-1 ring-white/5 backdrop-blur-xl sm:px-6">
+      <nav className="relative mx-auto grid max-w-7xl grid-cols-[auto_1fr_auto] items-center overflow-hidden border border-white/10 bg-gradient-to-b from-neutral-900/90 to-neutral-950/90 px-4 py-2.5 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.6)] ring-1 ring-white/5 backdrop-blur-xl sm:px-6">
         {/* Subtle dotted texture */}
         <div
           className="pointer-events-none absolute inset-0 opacity-[0.35] [background-image:radial-gradient(rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:10px_10px]"
           aria-hidden="true"
         />
 
-        {/* Left links */}
-        <ul className="relative hidden items-center gap-1 justify-self-start md:flex">
+        {/* Left logo */}
+        <Link
+          href="/"
+          className="group relative flex items-center justify-self-start"
+          aria-label="Mātru Multispeciality Hospital — home"
+        >
+          <img
+            src="/matru-primarylogo.png"
+            alt="Mātru Multispeciality Hospital"
+            className="h-9 w-auto drop-shadow-[0_6px_14px_rgba(0,0,0,0.18)] transition-transform duration-500 ease-out will-change-transform group-hover:scale-[1.04] sm:h-11"
+          />
+        </Link>
+
+        {/* Center links */}
+        <ul className="relative hidden items-center gap-1 justify-self-center md:flex">
           {NAV_LINKS.map((link, i) => (
             <li key={link} className="flex items-center">
               <Link
@@ -43,19 +56,6 @@ export default function Navbar() {
             </li>
           ))}
         </ul>
-
-        {/* Center logo */}
-        <Link
-          href="/"
-          className="group relative flex items-center justify-self-center"
-          aria-label="Mātru Multispeciality Hospital — home"
-        >
-          <img
-            src="/matru-primarylogo.png"
-            alt="Mātru Multispeciality Hospital"
-            className="h-9 w-auto drop-shadow-[0_6px_14px_rgba(0,0,0,0.18)] transition-transform duration-500 ease-out will-change-transform group-hover:scale-[1.04] sm:h-11"
-          />
-        </Link>
 
         {/* CTA */}
         <a
